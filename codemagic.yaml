@@ -1,0 +1,36 @@
+workflows:
+  felpfit-ios-unsigned:
+    name: FelpFit iOS Unsigned IPA
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      xcode: latest
+    scripts:
+      - name: Install XcodeGen
+        script: |
+          brew install xcodegen
+      - name: Generate Xcode project
+        script: |
+          xcodegen generate
+      - name: Build iPhone app without signing
+        script: |
+          xcodebuild \
+            -project FelpFit.xcodeproj \
+            -scheme FelpFit \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+      - name: Package unsigned IPA
+        script: |
+          APP_PATH="build/DerivedData/Build/Products/Release-iphoneos/FelpFit.app"
+          test -d "$APP_PATH"
+          mkdir -p build/ipa/Payload
+          ditto "$APP_PATH" build/ipa/Payload/FelpFit.app
+          cd build/ipa
+          /usr/bin/zip -qry ../FelpFit-unsigned.ipa Payload
+    artifacts:
+      - build/FelpFit-unsigned.ipa
+      - build/DerivedData/Build/Products/Release-iphoneos/FelpFit.app
