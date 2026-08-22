@@ -1,0 +1,55 @@
+name: Build FelpFit IPA
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build unsigned IPA
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build iPhone app
+        run: |
+          xcodebuild \
+            -project FelpFit.xcodeproj \
+            -scheme FelpFit \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath build/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            build
+
+      - name: Package IPA
+        run: |
+          APP_PATH="build/DerivedData/Build/Products/Release-iphoneos/FelpFit.app"
+          test -d "$APP_PATH"
+          mkdir -p build/ipa/Payload
+          ditto "$APP_PATH" build/ipa/Payload/FelpFit.app
+          cd build/ipa
+          /usr/bin/zip -qry ../FelpFit-unsigned.ipa Payload
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: FelpFit-unsigned-ipa
+          path: build/FelpFit-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30

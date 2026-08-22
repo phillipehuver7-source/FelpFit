@@ -1,0 +1,10 @@
+{
+  "name": "FelpFit",
+  "short_name": "FelpFit",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#09090e",
+  "theme_color": "#09090e",
+  "orientation": "portrait"
+}
+
