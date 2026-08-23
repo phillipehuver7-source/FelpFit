@@ -1,11 +1,12 @@
 {
-  "version": "1.5.0",
-  "title": "FelpFit 1.5",
+  "version": "1.5.3",
+  "title": "FelpFit 1.5.3",
   "highlights": [
     "Alertas mais rápidos e categorias que permanecem abertas",
     "Teste de 30 segundos protegido contra sincronizações",
     "Ranking, hidratação e fechamento do dia mais protegidos",
-    "Notificações nativas para novas atualizações",
+    "Notificação do iPhone disparada a cada nova publicação",
+    "Login preparado para salvar e preencher a senha pelo iPhone",
     "Nova experiência animada de atualização"
   ]
 }

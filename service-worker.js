@@ -1,4 +1,4 @@
-const CACHE_NAME = "felpfit-v150-release";
+const CACHE_NAME = "felpfit-v153-release";
 const APP_SHELL = [
   "./",
   "./index.html",
