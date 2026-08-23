@@ -81,10 +81,24 @@
   let initialRemoteSyncStarted = false;
   let testGuardUntil = 0;
   const pendingPreferences = new Map();
+  const updateNotificationRetryVersions = new Set();
 
   function postNative(payload) {
     try { window.webkit?.messageHandlers?.felpfitNative?.postMessage(payload); }
     catch (error) { console.warn('FelpFit alerts v2:', error); }
+  }
+
+  function retryUpdateNotificationOnce(payload) {
+    if (payload?.type !== 'webUpdate' || payload.available !== true) return;
+    const version = String(payload.remoteVersion || '').trim();
+    if (!version || updateNotificationRetryVersions.has(version)) return;
+    updateNotificationRetryVersions.add(version);
+
+    // Se o iOS ainda não perguntou, solicita permissão e refaz uma única
+    // checagem. A notificação só é marcada como enviada pelo Swift depois de
+    // o UNUserNotificationCenter aceitar o agendamento.
+    postNative({ command: 'requestPermissions' });
+    setTimeout(() => postNative({ command: 'checkWebUpdate' }), 1800);
   }
 
   function escapeHtml(value) {
@@ -508,6 +522,7 @@
 
       if (payload && typeof payload === 'object') {
         nativeState = { ...nativeState, ...payload };
+        retryUpdateNotificationOnce(payload);
 
         if (payload.type === 'state') {
           initialRemoteSyncPending = false;
@@ -530,7 +545,9 @@
       if (initialRemoteSyncStarted) return;
       initialRemoteSyncStarted = true;
       initialRemoteSyncPending = true;
-      syncRemote(true);
+      // Nunca force um reschedule no boot: builds já instalados removem as
+      // notificações pendentes durante sync forçado, inclusive a de update.
+      syncRemote(false);
       postNative({ command: 'getCapabilities' });
     }
 
@@ -543,7 +560,7 @@
           : String(document.documentElement?.dataset?.appVersion || '');
         postNative({ command: 'webVersion', version });
       } catch {}
-      startInitialRemoteSync();
+      setTimeout(startInitialRemoteSync, 3500);
     };
 
     window.openNotificationSettings = () => {
@@ -561,7 +578,7 @@
     window.__felpfitNativeSync = () => syncRemote(false);
 
     // Fallback se o didFinish do WKWebView tiver acontecido muito cedo.
-    setTimeout(startInitialRemoteSync, 700);
+    setTimeout(startInitialRemoteSync, 4000);
     originalSetInterval(() => syncRemote(false), 5 * 60 * 1000);
   }
 
