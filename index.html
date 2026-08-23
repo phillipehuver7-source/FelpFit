@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 89859)
-Total output lines: 9939
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -3643,7 +3640,3792 @@ Total output lines: 9939
         <p>Só o básico pra personalizar o app.</p>
 
         <div class="card stack">
-          <div class="field">…39859 tokens truncated…LocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}–${dateFromKey(keys[6]).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}`;
+          <div class="field">
+            <label>Seu nome</label>
+            <input id="name" type="text" placeholder="Ex.: Felipe" autocomplete="name">
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Idade</label>
+              <input id="age" type="number" min="10" max="100" placeholder="16">
+            </div>
+
+            <div class="field">
+              <label>Altura (cm)</label>
+              <input id="height" type="number" min="100" max="230" placeholder="175">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="step2" class="step hidden">
+        <h2>Seu ponto de partida.</h2>
+        <p>Isso alimenta seu painel e o cálculo de IMC.</p>
+
+        <div class="card stack">
+          <div class="row">
+            <div class="field">
+              <label>Peso atual (kg)</label>
+              <input id="weight" type="number" step="0.1" min="25" max="350" placeholder="107">
+            </div>
+
+            <div class="field">
+              <label>Meta de peso (kg)</label>
+              <input id="goal" type="number" step="0.1" min="25" max="350" placeholder="85">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="step3" class="step hidden">
+        <h2>Como anda sua rotina?</h2>
+        <p>Não é prova. É só pra calibrar o painel.</p>
+
+        <div class="card stack">
+          <div class="field">
+            <label>Quantas vezes você treina por semana?</label>
+            <select id="training">
+              <option value="">Selecione</option>
+              <option value="0">Ainda não treino</option>
+              <option value="1-2">1–2 vezes</option>
+              <option value="3-4">3–4 vezes</option>
+              <option value="5+">5 ou mais</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Seu foco principal</label>
+            <select id="focus">
+              <option value="">Selecione</option>
+              <option value="emagrecer">Emagrecer com consistência</option>
+              <option value="recompor">Perder gordura e ganhar/manter músculo</option>
+              <option value="habitos">Criar rotina e hábitos melhores</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="step4" class="step hidden">
+        <h2>Última: qual sua vibe?</h2>
+        <p>Isso muda o jeitinho das mensagens do app.</p>
+
+        <div class="choice-grid">
+          <button class="choice" data-vibe="calmo" onclick="pickVibe(this)">🧠 Calmo e objetivo</button>
+          <button class="choice" data-vibe="direto" onclick="pickVibe(this)">🥊 Direto ao ponto</button>
+          <button class="choice" data-vibe="zoeiro" onclick="pickVibe(this)">😂 Zoeiro</button>
+          <button class="choice" data-vibe="motivador" onclick="pickVibe(this)">🔥 Motivador</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="backBtn" class="btn secondary" onclick="prevStep()">Voltar</button>
+        <button id="nextBtn" class="btn" onclick="nextStep()">Continuar</button>
+      </div>
+    </section>
+
+    <section id="loading" class="screen">
+      <div class="loading">
+        <div class="orb"></div>
+        <h2 style="margin-top:24px">Montando seu perfil...</h2>
+        <p id="loadingText">Calculando ponto de partida.</p>
+        <div class="loading-bar"><span></span></div>
+      </div>
+    </section>
+
+    <section id="result" class="screen">
+      <div class="eyebrow">Seu ponto de partida</div>
+      <h2 id="resultTitle">Perfil pronto.</h2>
+
+      <div class="card">
+        <div class="metric">
+          <div>
+            <small class="tiny">Seu IMC</small>
+            <strong id="bmiValue">—</strong>
+          </div>
+          <div id="bmiLabel" class="badge">calculado</div>
+        </div>
+
+        <div id="bmiMessage" class="message"></div>
+
+        <div id="minorNote" class="warning hidden">
+          Como você tem menos de 20 anos, o número do IMC sozinho não deve ser usado para classificar seu peso. Em adolescentes, a avaliação correta considera idade, sexo e curvas de crescimento.
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="showJokePaywall()">Ver meu plano</button>
+      </div>
+    </section>
+
+    <section id="paywall" class="screen">
+      <div class="card paywall">
+        <div class="eyebrow">Plano FelpFit Ultra Mega Pro</div>
+        <div class="price">US$ 700.000.000</div>
+        <p>Parcelamos em 12x de apenas “vende a casa e conversa com o banco”.</p>
+
+        <div class="actions">
+          <button class="btn" onclick="revealFree()">Pagar 💳</button>
+          <button class="btn ghost" onclick="revealFree()">Continuar gordo 😭</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="freeReveal" class="screen">
+      <div class="card paywall">
+        <div style="font-size:50px">😂</div>
+        <h2>Tô brincando, porra.</h2>
+        <p>É tudo gratuito aqui com o mano Felp. Agora bora usar o app de verdade.</p>
+        <button class="btn" onclick="openDashboard()">Entrar no FelpFit</button>
+      </div>
+    </section>
+
+    <section id="dashboard" class="screen">
+      <div class="dashboard-header">
+        <div>
+          <div class="hello" id="helloName">Fala!</div>
+          <p style="margin:4px 0 0" id="homePhrase">Não precisa ganhar o mês hoje. Ganha o dia.</p>
+          <div id="accountCreatedText" class="account-created">🕒 Conta criada...</div>
+        </div>
+
+        <div class="clock">
+          <b id="clockTime">--:--</b>
+          <span id="clockDate">Carregando...</span>
+        </div>
+      </div>
+
+      <div class="home-tabs">
+        <button class="home-tab active" data-home-tab="today" onclick="selectHomeCategory('today')">Hoje</button>
+        <button class="home-tab" data-home-tab="week" onclick="selectHomeCategory('week')">Semana</button>
+        <button class="home-tab" data-home-tab="missions" onclick="selectHomeCategory('missions')">Missões</button>
+        <button class="home-tab" data-home-tab="progress" onclick="selectHomeCategory('progress')">Progresso</button>
+        <button class="home-tab" data-home-tab="rank" onclick="selectHomeCategory('rank')">Ranking</button>
+      </div>
+
+      <div id="homeCategory-today" class="home-category active">
+        <div class="card today-card">
+          <div class="eyebrow" id="todayEyebrow">HOJE</div>
+          <button class="today-journey-trigger" type="button" onclick="openDayJourney()" aria-label="Abrir plano completo do dia">
+            <span class="today-title" id="todayTitle">Sua rotina de hoje</span>
+            <span class="today-journey-hint">VER DIA <span class="today-journey-arrow">→</span></span>
+          </button>
+          <div class="routine-text" id="todayRoutine">Complete sua rotina para ver seu dia aqui.</div>
+        </div>
+
+        <div class="card checkin-card">
+          <div class="checkin-top">
+            <div>
+              <div class="eyebrow">PERGUNTAS DO DIA</div>
+              <div class="today-title" id="homeCheckinTitle">0 respondidas</div>
+              <div class="tiny" id="homeCheckinSub">Elas aparecem automaticamente nos horários programados.</div>
+            </div>
+            <div id="homeCheckCircle" class="circle-progress"><b>0%</b></div>
+          </div>
+        </div>
+
+        <div id="hydrationCard" class="card hydration-card">
+          <div class="hydration-head">
+            <div>
+              <div class="eyebrow">HIDRATAÇÃO DO DIA</div>
+              <div id="hydrationValue" class="hydration-value">0 / 4.000 ml</div>
+              <div id="hydrationStatus" class="tiny">8 blocos de até 500 ml, distribuídos ao longo do dia.</div>
+            </div>
+            <div style="font-size:34px" aria-hidden="true">💧</div>
+          </div>
+          <div id="hydrationDroplets" class="hydration-droplets" aria-label="Progresso de hidratação"></div>
+          <div class="remaining-line">
+            <span id="hydrationNext">Próximo bloco: —</span>
+            <span id="hydrationPoints">+0 pts</span>
+          </div>
+        </div>
+
+        <div id="todayScoreCard" class="card day-score-card hidden">
+          <div class="eyebrow">NOTA DO DIA</div>
+          <div class="day-score-number" id="todayScoreValue">0</div>
+          <div class="tiny" id="todayScoreLabel">calculando...</div>
+        </div>
+      </div>
+
+      <div id="homeCategory-week" class="home-category">
+        <div class="card week-status-panel">
+          <div class="week-status-head">
+            <div>
+              <div class="eyebrow">PAINEL DA SEMANA</div>
+              <div class="today-title" style="margin-bottom:0">Como os dias estão</div>
+            </div>
+            <span id="weekPanelRange" class="tiny"></span>
+          </div>
+          <div id="weekStatusGrid" class="week-status-grid"></div>
+        </div>
+
+        <div class="card">
+          <div class="eyebrow">REGRA DA SEMANA</div>
+          <h3 style="margin-top:8px">Nada antes da sua conta conta contra você.</h3>
+          <p class="tiny">Dias anteriores à criação do FelpFit aparecem neutros. Só começamos a cobrar Ritmo e missões a partir do momento em que sua conta existe.</p>
+        </div>
+      </div>
+
+      <div id="homeCategory-missions" class="home-category">
+        <div class="card mission-hub">
+          <div class="eyebrow">MISSÕES</div>
+          <div class="today-title" style="margin-bottom:0">Dia, semana e mês</div>
+
+          <div class="mission-list">
+            <div id="dailyMissionCard" class="mission-item">
+              <div class="mission-top">
+                <div>
+                  <div class="mission-name">☀️ Missão do dia</div>
+                  <div id="dailyMissionText" class="tiny">Fechar o dia com nota 80 ou mais.</div>
+                </div>
+                <div id="dailyMissionStatus" class="mission-status">!</div>
+              </div>
+              <div class="mission-bar"><span id="dailyMissionBar"></span></div>
+              <div class="mission-foot">
+                <span id="dailyMissionProgress">0%</span>
+                <span>+10 pts</span>
+              </div>
+            </div>
+
+            <div id="hydrationMissionCard" class="mission-item">
+              <div class="mission-top">
+                <div>
+                  <div class="mission-name">💧 Missão de hidratação</div>
+                  <div class="tiny">Registrar até 8 blocos de 500 ml, sem beber tudo de uma vez.</div>
+                </div>
+                <div id="hydrationMissionStatus" class="mission-status">!</div>
+              </div>
+              <div class="mission-bar"><span id="hydrationMissionBar"></span></div>
+              <div class="mission-foot">
+                <span id="hydrationMissionProgress">0 / 4.000 ml</span>
+                <span id="hydrationMissionPoints">até +16 pts</span>
+              </div>
+            </div>
+
+            <div id="weeklyMissionCard" class="mission-item">
+              <div class="mission-top">
+                <div>
+                  <div class="mission-name">🗓️ Missão da semana</div>
+                  <div class="tiny">Proteger o Ritmo em 5 dias desta semana.</div>
+                </div>
+                <div id="weeklyMissionStatus" class="mission-status">!</div>
+              </div>
+              <div class="mission-bar"><span id="weeklyMissionBar"></span></div>
+              <div class="mission-foot">
+                <span id="weeklyMissionProgress">0/5 dias</span>
+                <span>+75 pts</span>
+              </div>
+            </div>
+
+            <div id="monthlyMissionCard" class="mission-item">
+              <div class="mission-top">
+                <div>
+                  <div class="mission-name">🏆 Missão do mês</div>
+                  <div class="tiny">Proteger o Ritmo em 20 dias do mês.</div>
+                </div>
+                <div id="monthlyMissionStatus" class="mission-status">!</div>
+              </div>
+              <div class="mission-bar"><span id="monthlyMissionBar"></span></div>
+              <div class="mission-foot">
+                <span id="monthlyMissionProgress">0/20 dias</span>
+                <span>+250 pts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="homeCategory-progress" class="home-category">
+        <div class="card" style="margin-bottom:12px">
+          <span class="tiny">CAMINHO ATÉ A META</span>
+          <div style="display:flex;align-items:end;justify-content:space-between;margin-top:6px;gap:12px">
+            <b style="font-size:32px" id="dashWeight">— kg</b>
+            <span class="tiny" id="dashGoal">Meta: — kg</span>
+          </div>
+          <div class="goalbar"><span id="goalFill"></span></div>
+          <div class="remaining-line">
+            <span id="goalProgressText">Calculando progresso...</span>
+            <span id="goalRemainingText"></span>
+          </div>
+        </div>
+
+        <div class="card estimate-card">
+          <div class="eyebrow">ESTIMATIVA FELP</div>
+          <div id="goalEstimateText" class="estimate-big">Juntando dados...</div>
+          <p id="goalEstimateDetail" class="tiny">A estimativa só aparece depois que existir histórico suficiente de pesagens da manhã.</p>
+          <div class="estimate-warning">
+            ⚠️ Isso é só uma projeção matemática do seu próprio histórico. Pode acontecer bem antes ou bem depois. Peso varia com água, comida, treino, crescimento e vários outros fatores — isso não é promessa nem recomendação de velocidade.
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="mini"><span>IMC</span><b id="dashBmi">—</b></div>
+          <div class="mini"><span>Treinos/semana</span><b id="dashTraining">—</b></div>
+          <div class="mini"><span>Foco</span><b id="dashFocus" style="font-size:17px">—</b></div>
+          <div class="mini"><span>Ritmo</span><b id="dashRitmo" style="font-size:17px">0 dias 🪐</b></div>
+        </div>
+      </div>
+
+      <div id="homeCategory-rank" class="home-category">
+        <button class="card rank-card" onclick="openRankDetails()" style="width:100%;color:inherit;text-align:left">
+          <div class="rank-row">
+            <div style="display:flex;align-items:center;gap:13px">
+              <div id="rankEmblem" class="rank-emblem">🥉</div>
+              <div>
+                <div class="tiny">RANQUEADA FELPFIT</div>
+                <div id="rankName" class="rank-name">Bronze</div>
+                <div id="rankPointsText" class="tiny">0 pontos</div>
+                <div id="rankMultiplierText" class="multiplier-chip">⚡ x1.00 pelo Ritmo</div>
+              </div>
+            </div>
+            <div class="badge">abrir ranking</div>
+          </div>
+          <div class="rank-xpbar"><span id="rankProgressFill"></span></div>
+          <div class="remaining-line">
+            <span id="rankCurrentText">Bronze</span>
+            <span id="rankNextText">Próximo: Prata</span>
+          </div>
+        </button>
+
+        <div class="card">
+          <div class="eyebrow">MULTIPLICADOR</div>
+          <h3 style="margin-top:8px">O bônus começa só no 3º dia.</h3>
+          <p class="tiny">Antes disso, cada ponto vale x1.00. O multiplicador foi deixado mais rigoroso: sequência longa vale de verdade.</p>
+        </div>
+      </div>
+
+      <button class="card" onclick="openNotificationSettings()" style="width:100%;color:inherit;text-align:left;margin-top:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+          <div><div class="eyebrow">NOTIFICAÇÕES</div><b>Receber perguntas no horário</b><div class="tiny">Avisos personalizados, fila inteligente e lembretes de água.</div></div>
+          <span id="notificationHomeBadge" class="badge">configurar</span>
+        </div>
+      </button>
+    </section>
+
+    <section id="calendar" class="screen">
+      <div class="eyebrow">CALENDÁRIO</div>
+      <h2>Seu mês do seu jeito.</h2>
+      <p>Toque em um dia para ver tudo que vai acontecer. A edição fica logo abaixo dos detalhes.</p>
+
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+          <button class="btn secondary small" onclick="changeCalendarMonth(-1)">←</button>
+          <b id="calendarTitle">Mês</b>
+          <button class="btn secondary small" onclick="changeCalendarMonth(1)">→</button>
+        </div>
+
+        <div class="calendar-grid tiny" style="margin-top:14px">
+          <div class="calendar-weekday">Dom</div><div class="calendar-weekday">Seg</div><div class="calendar-weekday">Ter</div><div class="calendar-weekday">Qua</div><div class="calendar-weekday">Qui</div><div class="calendar-weekday">Sex</div><div class="calendar-weekday">Sáb</div>
+        </div>
+
+        <div id="calendarGrid" class="calendar-grid"></div>
+      </div>
+    </section>
+
+    <section id="weekly" class="screen">
+      <div class="eyebrow">RESUMO SEMANAL</div>
+      <h2>Como a semana tá andando?</h2>
+      <p id="weeklyRange">Últimos 7 dias.</p>
+
+      <div id="weeklyStats" class="summary-grid"></div>
+
+      <div class="card" style="margin-top:12px">
+        <h3>Leitura do Felp</h3>
+        <div id="weeklyMessage" class="message">Ainda juntando dados.</div>
+      </div>
+    </section>
+
+    <section id="profile" class="screen">
+      <div class="eyebrow">SEU PERFIL</div>
+      <h2>Seus dados.</h2>
+      <p>Tudo que o FelpFit já sabe sobre você fica aqui.</p>
+
+      <div class="card">
+        <div id="profileList" class="profile-list"></div>
+
+        <div id="completeBadge" class="achievement hidden">
+          <div class="achievement-icon">⭐</div>
+          <div>
+            <b>Perfil Completo</b>
+            <div class="tiny">Sua rotina agora faz parte do FelpFit.</div>
+          </div>
+        </div>
+
+        <div id="weekBadge" class="achievement hidden">
+          <div class="achievement-icon">🪐</div>
+          <div>
+            <b>Uma semana de Ritmo</b>
+            <div class="tiny">7 dias mostrando que constância existe.</div>
+          </div>
+        </div>
+
+        <div id="weightBadge" class="achievement hidden">
+          <div class="achievement-icon">⚖️</div>
+          <div>
+            <b>10 registros</b>
+            <div class="tiny">Agora já dá pra começar a enxergar tendência.</div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="card">
+        <div class="eyebrow">CONFIGURAÇÕES</div>
+        <h3 style="margin-top:8px">Mudar o que já foi cadastrado</h3>
+        <p class="tiny">O cadastro completo some do menu principal depois de concluído, mas nunca fica preso. Você pode editar tudo daqui.</p>
+
+        <div class="stack">
+          <button class="btn secondary" onclick="toggleProfileEdit()">👤 Editar dados básicos</button>
+          <button class="btn secondary" onclick="openCompleteFromSettings()">📝 Editar cadastro completo, treino e rotina</button>
+        </div>
+      </div>
+
+      <div id="profileEdit" class="card hidden">
+        <h3>Editar perfil</h3>
+
+        <div class="stack">
+          <div class="field">
+            <label>Nome</label>
+            <input id="editName" type="text">
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Idade</label>
+              <input id="editAge" type="number" min="10" max="100">
+            </div>
+
+            <div class="field">
+              <label>Altura (cm)</label>
+              <input id="editHeight" type="number" min="100" max="230">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label>Peso atual (atualizado pela pesagem da manhã)</label>
+              <input id="editWeight" type="number" step="0.1" disabled>
+            </div>
+
+            <div class="field">
+              <label>Meta (kg)</label>
+              <input id="editGoal" type="number" step="0.1" min="25" max="350">
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Treinos por semana</label>
+            <select id="editTraining">
+              <option value="0">Ainda não treino</option>
+              <option value="1-2">1–2 vezes</option>
+              <option value="3-4">3–4 vezes</option>
+              <option value="5+">5 ou mais</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Foco</label>
+            <select id="editFocus">
+              <option value="emagrecer">Emagrecer com consistência</option>
+              <option value="recompor">Perder gordura e ganhar/manter músculo</option>
+              <option value="habitos">Criar rotina e hábitos melhores</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Vibe</label>
+            <select id="editVibe">
+              <option value="calmo">Calmo e objetivo</option>
+              <option value="direto">Direto ao ponto</option>
+              <option value="zoeiro">Zoeiro</option>
+              <option value="motivador">Motivador</option>
+            </select>
+          </div>
+
+          <button class="btn" onclick="saveProfileEdit()">Salvar alterações</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="ritmo" class="screen">
+      <div class="eyebrow">RITMO</div>
+      <h2>Constância que aparece.</h2>
+      <p>O primeiro dia começa quando o perfil é criado. Depois, cada novo dia só entra na sequência se o fechamento for feito e a nota final ficar em 80/100 ou mais.</p>
+
+      <div class="card">
+        <div class="pet-wrap">
+          <div class="pet">🪐</div>
+
+          <div>
+            <div class="tiny" id="petLabel">SEU PARCEIRO</div>
+            <div class="streak-number"><span id="ritmoDays">1</span> dias</div>
+            <div class="tiny">Maior sequência: <span id="bestRitmo">1</span> dias</div>
+          </div>
+        </div>
+
+        <div class="message" id="ritmoMessage"></div>
+      </div>
+
+      <div class="card">
+        <h3>Como o Ritmo funciona</h3>
+        <p class="tiny">
+          Você começa com 1 dia ao criar o perfil. Quando a data muda, o FelpFit olha o dia anterior:
+          se as 15 perguntas foram respondidas, a sequência aumenta. Se não foram, ela reinicia.
+        </p>
+      </div>
+    </section>
+
+    <section id="complete" class="screen">
+      <div class="eyebrow">CADASTRO COMPLETO</div>
+      <h2>Deixa o FelpFit com a sua cara.</h2>
+      <p>O cadastro inicial já basta. Isso aqui serve pra personalizar rotina, treino e o que aparece na home.</p>
+
+      <div class="card stack">
+        <div class="field">
+          <label>Como funciona o seu treino?</label>
+          <textarea id="trainingDetails" placeholder="Ex.: segunda peito e tríceps, terça costas e bíceps, quarta perna..."></textarea>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Sua semana</h3>
+        <p class="tiny">Escreva o que costuma acontecer em cada dia: escola, treino, horários importantes, descanso, etc.</p>
+
+        <div class="week-grid">
+          <div class="day-box"><h3>Segunda-feira</h3><textarea id="monday"></textarea></div>
+          <div class="day-box"><h3>Terça-feira</h3><textarea id="tuesday"></textarea></div>
+          <div class="day-box"><h3>Quarta-feira</h3><textarea id="wednesday"></textarea></div>
+          <div class="day-box"><h3>Quinta-feira</h3><textarea id="thursday"></textarea></div>
+          <div class="day-box"><h3>Sexta-feira</h3><textarea id="friday"></textarea></div>
+          <div class="day-box"><h3>Sábado</h3><textarea id="saturday"></textarea></div>
+          <div class="day-box"><h3>Domingo</h3><textarea id="sunday"></textarea></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" onclick="saveCompleteProfile()">Salvar cadastro completo</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">CHATGPT</div>
+        <h3 style="margin-top:8px">Montar minha rotina com o ChatGPT</h3>
+        <p>Joga tudo do seu jeito e copia um prompt pronto pra organizar.</p>
+
+        <div class="field">
+          <label>Rotina em texto livre</label>
+          <textarea id="rawRoutine" placeholder="Ex.: segunda acordo 6:30, escola até meio-dia, treino de peito às 15h..."></textarea>
+        </div>
+
+        <div class="actions">
+          <button class="btn secondary" onclick="generatePrompt()">Gerar prompt</button>
+          <button class="btn" onclick="copyPrompt()">Copiar prompt</button>
+        </div>
+
+        <div id="promptPreview" class="prompt-box hidden"></div>
+      </div>
+    </section>
+
+    <section id="badDay" class="screen">
+      <div class="card bad-day-panel">
+        <div class="big">🌧️➡️🌤️</div>
+        <div class="eyebrow">MODO DIA RUIM</div>
+        <h2>Hoje é modo sobrevivência inteligente.</h2>
+        <p id="badDayIntro">O objetivo é reduzir atrito e não transformar um dia ruim em abandono.</p>
+
+        <div id="retrospective" class="retrospective"></div>
+        <div class="message" id="badDayMessage"></div>
+
+        <div class="actions">
+          <button class="btn secondary" onclick="returnToBadDayDashboard()">Voltar ao FelpFit</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="scheduledQuestionOverlay" class="scheduled-question-overlay hidden"><div class="scheduled-question-card"><div class="time-chip" id="scheduledQuestionTime">PERGUNTA DO DIA</div><h2 id="scheduledQuestionTitle">Pergunta</h2><p id="scheduledQuestionContext"></p><div id="scheduledQuestionState" class="scheduled-question-state hidden"></div><div id="scheduledQuestionOptions" class="option-grid"></div><div class="scheduled-progress"><span id="scheduledQuestionExpires">Disponível por até 20 minutos</span><span id="scheduledQuestionCounter">1/1</span></div></div></div>
+
+  <div id="dayJourneyOverlay" class="day-journey-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dayJourneyTitle" onclick="closeDayJourneyFromBackdrop(event)">
+    <div class="day-journey-sheet">
+      <div class="day-journey-handle"></div>
+      <button class="day-journey-close" type="button" onclick="closeDayJourney()" aria-label="Fechar plano do dia">×</button>
+      <div id="dayJourneyContent"></div>
+    </div>
+  </div>
+
+  <div id="rankDetailsOverlay" class="rank-details-overlay hidden">
+    <div class="rank-details-shell">
+      <div class="rank-details-head">
+        <div>
+          <div class="eyebrow">RANQUEADA FELPFIT</div>
+          <b>Seu progresso competitivo</b>
+        </div>
+        <button class="icon-btn" onclick="closeRankDetails()">✕</button>
+      </div>
+
+      <div class="rank-hero">
+        <img id="rankDetailsImage" class="rank-hero-image" alt="Rank atual">
+        <div class="tiny">RANK ATUAL</div>
+        <div id="rankDetailsName" class="rank-current-name">BRONZE</div>
+        <p id="rankDetailsPoints">0 pontos</p>
+        <div class="rank-xpbar"><span id="rankDetailsProgress"></span></div>
+        <div class="remaining-line">
+          <span id="rankDetailsCurrent">Bronze</span>
+          <span id="rankDetailsNext">Próximo: Prata</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <h3>Como a ranqueada funciona</h3>
+        <div class="rank-rules">
+          <div class="rank-rule"><b>🎯 Pontos do dia</b><div class="tiny">A nota final vira pontos. Quanto mais perguntas você responder dentro da janela, maior a pontuação.</div></div>
+          <div class="rank-rule"><b>⚡ Multiplicador de Ritmo</b><div class="tiny">O bônus só começa no 3º dia. Depois cresce devagar: x2.00 só chega com 90 dias de Ritmo.</div></div>
+          <div class="rank-rule"><b>🔥 Ritmo é mais rígido</b><div class="tiny">Para manter o Ritmo, é obrigatório fechar o dia e terminar com pelo menos 80/100.</div></div>
+          <div class="rank-rule"><b>📈 Cada rank exige mais</b><div class="tiny">Bronze e Prata sobem relativamente rápido. Ouro, Mítico, Lendário e Mestre pedem muito mais constância acumulada.</div></div>
+          <div class="rank-rule"><b>⏳ Pergunta expirada</b><div class="tiny">Cada pergunta fica disponível por 20 minutos. Se passar, ela vira perdida e reduz a nota máxima possível daquele dia.</div></div>
+          <div class="rank-rule"><b>↪️ Fazer depois</b><div class="tiny">Cada missão tem um prazo próprio. O app lembra a cada 5 minutos, e tocar de novo nunca reinicia o relógio.</div></div>
+          <div class="rank-rule"><b>➖ Missão não feita</b><div class="tiny">A consequência é descontada no fechamento, antes dos pontos ganhos. O placar para em zero e qualquer parte restante fica inativa.</div></div>
+        </div>
+
+        <div id="rankMultiplierDanger" class="rank-danger-box">
+          ⚠️ Se o Ritmo quebrar, o multiplicador volta imediatamente para <b>x1.00</b>. Os bônus de sequência precisam ser construídos de novo desde o começo.
+        </div>
+
+        <div class="eyebrow" style="margin-top:18px">MULTIPLICADOR DO RITMO</div>
+        <div id="multiplierLadder" class="multiplier-ladder"></div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="eyebrow">CAMINHO COMPLETO</div>
+        <h3 style="margin-top:8px">Todos os ranks</h3>
+        <div id="rankRoad" class="rank-road"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dailyResultOverlay" class="daily-result-overlay hidden">
+    <div class="daily-result-card">
+      <div class="eyebrow" style="text-align:center">FECHAMENTO DO DIA</div>
+      <div class="daily-result-score"><b id="dailyResultScore">0</b></div>
+      <h2 id="dailyResultTitle" style="text-align:center">Resultado do dia</h2>
+      <p id="dailyResultStatus" style="text-align:center"></p>
+      <div id="dailyResultSummary" class="daily-summary"></div>
+
+      <div class="field" style="margin-top:16px">
+        <label>Quer contar algo a mais sobre seu dia? <span class="tiny">(opcional)</span></label>
+        <textarea id="dailyExtraNote" placeholder="Se quiser, conta alguma coisa boa, ruim, inesperada ou algo que as perguntas não pegaram..."></textarea>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" onclick="copyDailySummary()">Copiar resumo pro Felp</button>
+        <button class="btn" onclick="finishDailyResult()">Continuar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rankUpOverlay" class="rank-up-overlay hidden"><div class="rank-up-card"><div id="rankUpIcon" class="rank-up-icon">🥈</div><div class="eyebrow">NOVO RANK</div><h1 id="rankUpTitle">Prata</h1><p id="rankUpText">Seu Ritmo virou progresso visível.</p><button class="btn" onclick="closeRankUp()">Continuar</button></div></div>
+
+  <div id="localLoginOverlay" class="login-overlay hidden">
+    <div class="login-card">
+      <div class="login-lock">🔒</div>
+      <div class="eyebrow" style="text-align:center">ACESSO À CONTA</div>
+      <h2 style="text-align:center">Entrar no FelpFit</h2>
+      <p class="tiny" style="text-align:center">Entre para carregar seu perfil e seus dados salvos na nuvem.</p>
+
+      <div class="stack">
+        <div class="field">
+          <label>Usuário</label>
+          <input id="localLoginUser" type="text" autocomplete="username" placeholder="felipe.gabriel">
+        </div>
+
+        <div class="field">
+          <label>Senha</label>
+          <input id="localLoginPass" type="password" autocomplete="current-password" placeholder="Sua senha">
+        </div>
+
+        <button class="btn" onclick="unlockLocalLogin()">Entrar</button>
+        <button class="btn secondary" onclick="closeLogin()">Voltar</button>
+        <div id="localLoginError" class="tiny" style="text-align:center;color:var(--danger)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="appUpdateOverlay" class="login-overlay hidden" style="z-index:1200">
+    <div class="login-card">
+      <div class="login-lock">🚀</div>
+      <div class="eyebrow" style="text-align:center">NOVA VERSÃO</div>
+      <h2 id="appUpdateTitle" style="text-align:center">Atualização obrigatória</h2>
+      <p class="tiny" style="text-align:center">O FelpFit foi atualizado. Para continuar, instale a versão nova e entre novamente.</p>
+
+      <div class="card" style="margin-top:16px;text-align:left">
+        <div class="eyebrow">O QUE MUDOU</div>
+        <div id="appUpdateNotes" class="stack" style="margin-top:10px"></div>
+      </div>
+
+      <button id="appUpdateButton" class="btn" style="width:100%;margin-top:16px" onclick="applyMandatoryUpdate()">Atualizar agora</button>
+      <div id="appUpdateError" class="tiny" style="text-align:center;color:var(--danger);margin-top:10px"></div>
+    </div>
+  </div>
+
+  <div id="morningWeightOverlay" class="morning-weight-overlay hidden">
+    <div class="morning-weight-card">
+      <div class="eyebrow">PRIMEIRA ENTRADA DO DIA</div>
+      <h2>Peso da manhã</h2>
+      <p>Se você for se pesar hoje, tenta manter o padrão: depois de ir ao banheiro e antes de comer ou beber. Com pouca roupa — ou sem roupa, se for confortável e privado — ajuda a reduzir variação.</p>
+
+      <div class="field">
+        <label>Peso de hoje (kg)</label>
+        <input id="morningWeightInput" type="number" step="0.1" min="25" max="350" placeholder="Ex.: 96.4">
+      </div>
+
+      <div id="morningWeightTiming" class="tiny" style="margin-top:10px"></div>
+
+      <div class="actions">
+        <button class="btn secondary" onclick="skipMorningWeight()">Pular hoje</button>
+        <button class="btn" onclick="saveMorningWeight()">Salvar peso</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="badDayQuestionnaireOverlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="eyebrow">DIA RUIM</div>
+      <h2>Antes de ativar, me dá o contexto.</h2>
+      <p>É curto. O registro serve pra você enxergar quantos dias ruins realmente aconteceram — sem transformar isso em julgamento.</p>
+
+      <div id="badDayQuestions" class="bad-question-list"></div>
+
+      <div class="field" style="margin-top:12px">
+        <label>Quer contar algo a mais? <span class="tiny">(opcional)</span></label>
+        <textarea id="badDayExtra" placeholder="Se quiser, escreve o que aconteceu..."></textarea>
+      </div>
+
+      <div class="actions">
+        <button class="btn secondary" onclick="cancelBadDayQuestionnaire()">Cancelar</button>
+        <button class="btn" onclick="completeBadDayQuestionnaire()">Ativar Dia Ruim</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="calendarDetailOverlay" class="calendar-detail-overlay hidden" onclick="closeCalendarDetailsFromBackdrop(event)">
+    <div class="calendar-detail-card" role="dialog" aria-modal="true" aria-labelledby="calendarDetailDate">
+      <div class="calendar-modal-head">
+        <div>
+          <div class="eyebrow">SEU DIA COMPLETO</div>
+          <h3 id="calendarDetailDate" style="margin-top:6px">Data</h3>
+        </div>
+        <button class="icon-btn" onclick="closeCalendarDetails()">✕</button>
+      </div>
+
+      <div class="calendar-modal-scroll">
+        <div id="calendarDetailEvent"></div>
+
+        <div class="calendar-detail-section">
+          <div id="calendarDetailRoutineLabel" class="eyebrow">ROTINA FELPFIT</div>
+          <div id="calendarDetailRoutine" class="calendar-detail-list"></div>
+        </div>
+      </div>
+
+      <div class="actions calendar-modal-actions">
+        <button class="btn secondary" onclick="closeCalendarDetails()">Fechar</button>
+        <button class="btn" onclick="editCalendarDetailDay()">Editar este dia</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="calendarEditorOverlay" class="calendar-editor-overlay hidden">
+    <div class="calendar-editor-card" role="dialog" aria-modal="true" aria-labelledby="calendarEditorDate">
+      <div class="calendar-modal-head">
+        <div>
+          <div class="eyebrow">PERSONALIZAR DIA</div>
+          <h3 id="calendarEditorDate" style="margin-top:6px">Data</h3>
+        </div>
+        <button class="icon-btn" onclick="closeCalendarEditor()">✕</button>
+      </div>
+
+      <div class="calendar-modal-scroll">
+        <div id="calendarEditorPreview" class="calendar-preview">
+          <div>
+            <div id="calendarPreviewSymbol" style="font-size:28px"></div>
+            <b id="calendarPreviewLabel">1</b>
+            <div id="calendarPreviewTitle" class="tiny"></div>
+          </div>
+        </div>
+
+        <div class="stack">
+        <div class="field">
+          <label>Título / o que vai acontecer</label>
+          <input id="calendarCustomTitle" type="text" maxlength="80" placeholder="Ex.: prova, viagem, consulta, descanso...">
+        </div>
+
+        <div class="field">
+          <label>Hora que começa <span class="tiny">(opcional)</span></label>
+          <input id="calendarCustomStartTime" type="time">
+        </div>
+
+        <div class="field">
+          <label>Avisar antes do evento</label>
+          <select id="calendarEventReminderMinutes">
+            <option value="0">Sem lembrete do evento</option>
+            <option value="5">5 minutos antes</option>
+            <option value="10">10 minutos antes</option>
+            <option value="15">15 minutos antes</option>
+            <option value="30">30 minutos antes</option>
+            <option value="60">1 hora antes</option>
+            <option value="120">2 horas antes</option>
+          </select>
+          <span class="tiny">Só dispara se o evento tiver horário inicial.</span>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Texto curto no lugar do número</label>
+            <input id="calendarCustomLabel" type="text" maxlength="8" placeholder="Ex.: PROVA">
+          </div>
+
+          <div class="field">
+            <label>Símbolo / emoji</label>
+            <input id="calendarCustomSymbol" type="text" maxlength="8" placeholder="🔥">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Cor do painel</label>
+            <input id="calendarCustomColor" type="color" value="#8b5cf6">
+          </div>
+
+          <div class="field">
+            <label>Cor do texto</label>
+            <input id="calendarCustomTextColor" type="color" value="#ffffff">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Fundo RGB animado</label>
+          <label class="inline-check">
+            <input id="calendarCustomRgb" type="checkbox" onchange="toggleCalendarRgb()">
+            Ativar RGB
+          </label>
+
+          <div id="calendarRgbStylePicker" class="rgb-style-picker hidden">
+            <button type="button" class="rgb-style-btn rgb-style-1" data-rgb-style="1" onclick="selectCalendarRgbStyle(1)"><span>1. Rainbow</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-2" data-rgb-style="2" onclick="selectCalendarRgbStyle(2)"><span>2. Neon Blue</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-3" data-rgb-style="3" onclick="selectCalendarRgbStyle(3)"><span>3. Sunset</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-4" data-rgb-style="4" onclick="selectCalendarRgbStyle(4)"><span>4. Aqua</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-5" data-rgb-style="5" onclick="selectCalendarRgbStyle(5)"><span>5. Fire</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-6" data-rgb-style="6" onclick="selectCalendarRgbStyle(6)"><span>6. Cyber</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-7" data-rgb-style="7" onclick="selectCalendarRgbStyle(7)"><span>7. Galaxy</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-8" data-rgb-style="8" onclick="selectCalendarRgbStyle(8)"><span>8. Toxic</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-9" data-rgb-style="9" onclick="selectCalendarRgbStyle(9)"><span>9. Vapor</span></button>
+            <button type="button" class="rgb-style-btn rgb-style-10" data-rgb-style="10" onclick="selectCalendarRgbStyle(10)"><span>10. Spin</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Imagem por URL <span class="tiny">(opcional)</span></label>
+          <input id="calendarCustomImageUrl" type="text" placeholder="https://...">
+        </div>
+
+        <div class="field">
+          <label>Ou enviar uma imagem</label>
+          <input id="calendarCustomImageFile" type="file" accept="image/*" onchange="handleCalendarImageUpload(this)">
+        </div>
+
+        <div class="field">
+          <label>Observação completa</label>
+          <textarea id="calendarCustomNote" placeholder="Escreve os detalhes desse dia..."></textarea>
+        </div>
+
+        <div class="calendar-extension-box">
+          <div class="eyebrow">ROTINA PERSONALIZADA DO DIA</div>
+          <b>O que você deve fazer e quando</b>
+          <p class="tiny" style="margin-top:5px">Edite, apague ou adicione blocos. Cada bloco pode avisar alguns minutos antes e aparece nos detalhes deste dia.</p>
+          <div id="calendarRoutineEditor" class="calendar-routine-editor"></div>
+          <div class="actions" style="margin-top:10px">
+            <button type="button" class="btn secondary small" onclick="addCalendarRoutineItem()">＋ Adicionar bloco</button>
+            <button type="button" class="btn ghost small" onclick="resetCalendarRoutineToDefault()">Usar rotina padrão</button>
+          </div>
+        </div>
+
+        <div class="calendar-extension-box">
+          <div class="eyebrow">ESTENDER CALENDÁRIO</div>
+          <b>Duplicar este evento em outros turnos</b>
+          <p class="tiny" style="margin-top:5px">Escolha outras datas. O FelpFit cria 1º, 2º, 3º turno na ordem das datas, inclusive no próximo mês.</p>
+          <div class="calendar-extension-input">
+            <input id="calendarExtensionDate" type="date">
+            <button type="button" class="btn secondary small" onclick="addCalendarExtensionDate()">Adicionar data</button>
+          </div>
+          <div id="calendarExtensionList" class="calendar-extension-list"></div>
+        </div>
+        </div>
+      </div>
+
+      <div class="actions calendar-modal-actions">
+        <button class="btn ghost" onclick="clearCalendarDayCustom()">Limpar dia</button>
+        <button class="btn" onclick="saveCalendarDayCustom()">Salvar personalização</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="toast" class="toast">Feito.</div>
+
+  <div id="mascotModal" class="modal-overlay hidden">
+    <div class="modal">
+      <div style="font-size:46px">✨</div>
+      <h2>3 dias seguidos!</h2>
+      <p>Tá começando a virar rotina. Agora esse parceiro precisa de um nome.</p>
+
+      <div class="field">
+        <label>Nome do mascote</label>
+        <input id="mascotNameInput" type="text" maxlength="24" placeholder="Ex.: Jubileu">
+      </div>
+
+      <div class="actions">
+        <button class="btn" onclick="saveMascotName()">Salvar nome</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    const DEV_MODE = true;
+
+    let step = 1;
+    let selectedVibe = "";
+    let calendarCursor = new Date();
+    let calendarEditingKey = null;
+    let calendarPendingImage = "";
+    let calendarPendingAssetId = null;
+    let calendarDetailKey = null;
+    let calendarExtensionDates = [];
+    let calendarRoutineDraft = [];
+    let calendarNotificationIntentKey = "";
+    let appUnlocked = false;
+    let notificationQuestionIntent = null;
+    let lastClockMinute = "";
+    let lastRankRenderKey = "";
+
+    // A autenticação é validada no servidor. Nenhuma senha fica no HTML público.
+    let cloudAuthenticated = false;
+    let cloudSaveTimer = null;
+    let cloudSaveChain = Promise.resolve();
+    let cloudPendingSnapshot = null;
+    let cloudSaveEpoch = 0;
+    const startupStartedAt = performance.now();
+    let startupFinished = false;
+    const PRIMARY_CLOUD_PROFILE_ID = "d3bc2940-6692-468f-98d6-44c598349cb2";
+    const APP_VERSION = '1.5.2';
+    // A partir da 1.3.0, toda mudança publicada vira uma atualização visível.
+    // Isso mantém tela, código, sessão e notificações sempre na mesma versão.
+    const LAST_MANDATORY_UPDATE_VERSION = APP_VERSION;
+    const APP_VERSION_KEY = "felpfitAppVersion";
+    const APP_RELEASE_NOTES = [
+      "Lembretes do calendário agora começam desligados: nenhum evento ou bloco da rotina agenda aviso sozinho.",
+      "Para receber um aviso, escolha manualmente 5, 10, 15, 30, 60 ou 120 minutos antes.",
+      "A opção de 15 minutos antes continua disponível e passa a funcionar somente depois de ser selecionada por você.",
+      "Na primeira abertura, avisos antigos do calendário são desligados uma vez para garantir que nada seja agendado sem sua escolha."
+    ];
+
+    const STORAGE = {
+      profile: "felpfitProfile",
+      complete: "felpfitCompleteProfile",
+      ritmo: "felpfitRitmo",
+      mascot: "felpfitMascot",
+      checkins: "felpfitCheckins",
+      weights: "felpfitWeights",
+      achievements: "felpfitAchievements",
+      scheduledAnswers: "felpfitScheduledAnswers",
+      rank: "felpfitRank",
+      missions: "felpfitMissionRewards",
+      dailyWeight: "felpfitDailyWeightState",
+      badDays: "felpfitBadDays",
+      calendarCustom: "felpfitCalendarCustom",
+      calendarAssets: "felpfitCalendarAssets",
+      missionPolicy: "felpfitMissionPolicy",
+      calendarReminderOptIn: "felpfitCalendarReminderOptInV142"
+    };
+
+    const DEV_DATABASE_KEY = "felpfitDeveloperDatabase";
+    let devSnapshotTimer = null;
+    let resetArmedUntil = 0;
+    const SCHEDULED_QUESTIONS = {
+      0:[
+        {id:"walk_plan",time:"13:50",text:"Vai rolar a caminhada/orla hoje?",context:"Domingo costuma ter cerca de 7 km de ida e volta.",options:["Sim","Talvez","Não","Não — saúde/segurança"]},
+        {id:"walk_done",time:"17:30",text:"Como foi a atividade de hoje?",context:"Conta só o que aconteceu de verdade.",options:["Fiz completa","Fiz parte","Não fui","Parei por segurança"]},
+        {id:"energy",time:"20:10",text:"Como você terminou o domingo?",context:"Energia e disposição entram no resumo do dia.",options:["Bem","Mais ou menos","Cansado"]},
+        {id:"daily_close",time:"21:30",text:"Fechar o dia de hoje?",context:"Essa resposta valida seu Ritmo. Sem fechamento, a sequência quebra quando a data virar.",options:["Fechar dia"]}
+      ],
+      1:weekdayQuestions("peito","Supinos, voador e pullover.","17:30","18:00","~30 min"),
+      2:weekdayQuestions("bíceps + tríceps","Treino alternando os dois grupos.","17:35","18:05","~30 min"),
+      3:weekdayQuestions("perna","Leg press, extensora, flexora, abdutora, adutora, hack e panturrilha.","17:40","18:00","~10 min"),
+      4:weekdayQuestions("costas","Puxada, remadas, pullover e serrote.","17:35","18:05","~30 min"),
+      5:weekdayQuestions("ombros/trapézio","Desenvolvimento, elevações, remada alta e encolhimento.","17:35","18:05","~30 min"),
+      6:[
+        {id:"wake",time:"08:15",text:"Acordou pro cardio das 9h?",context:"Sábado é cardio.",options:["Sim","Tô levantando","Hoje mudou"]},
+        {id:"pre_cardio",time:"08:40",text:"Como você tá antes do cardio?",context:"Se estiver fraco, tonto ou passando mal, não força.",options:["Bem","Normal","Sem energia"]},
+        {id:"creatine",time:"08:45",text:"Creatina antes de ir?",context:"Só registro da sua rotina.",options:["Sim","Ainda não","Hoje não"]},
+        {id:"cardio1",time:"09:35",text:"Primeiro bloco de cardio feito?",context:"Seu sábado costuma ter dois blocos.",options:["Sim","Estou fazendo agora","Parcial","Não","Parei por segurança"]},
+        {id:"cardio2",time:"10:10",text:"Segundo bloco concluído?",context:"Total aproximado de 1 hora.",options:["Sim","Estou fazendo agora","Parcial","Não","Parei por segurança"]},
+        {id:"food",time:"11:00",text:"Já comeu alguma coisa depois do cardio?",context:"O app não vai tratar ficar sem comer como objetivo.",options:["Sim","Vou comer agora","Ainda não","Não consigo comer agora"]},
+        {id:"recovery",time:"18:30",text:"Como ficou sua recuperação hoje?",context:"Energia, fome e cansaço contam.",options:["Boa","Normal","Ruim"]},
+        {id:"daily_close",time:"21:30",text:"Fechar o dia de hoje?",context:"Fechar o dia valida seu Ritmo.",options:["Fechar dia"]}
+      ]
+    };
+
+    function weekdayQuestions(workout,workoutContext,postTime,cardioTime,cardioLabel){
+      return [
+        {id:"wake",time:"06:35",text:"Já acordou e tá de pé?",context:"Escola às 7h.",options:["Sim","Tô levantando","Atrasado"]},
+        {id:"creatine",time:"06:45",text:"Creatina da manhã feita?",context:"Só registra. Sem drama se esqueceu.",options:["Sim","Ainda não","Hoje não"]},
+        {id:"school_exit",time:"14:05",text:"Saiu da escola?",context:"Seu almoço costuma acontecer até 14:30.",options:["Sim","Ainda não","Rotina mudou"]},
+        {id:"lunch",time:"14:35",text:"Almoçou?",context:"Seu treino costuma começar entre 15:30 e 16:00.",options:["Sim","Mais ou menos","Ainda não","Não consigo comer agora"]},
+        {id:"pre_gym",time:"15:35",text:`Treino de ${workout} vai rolar hoje?`,context:workoutContext,options:["Sim","Vou mais tarde","Não","Não — saúde/segurança"]},
+        {id:"post_gym",time:postTime,text:`Treino de ${workout} concluído?`,context:workoutContext,options:["Completo","Estou fazendo agora","Parcial","Não treinei","Parei por segurança"]},
+        {id:"cardio",time:cardioTime,text:`Cardio de ${cardioLabel} feito?`,context:"Registra o que aconteceu, sem usar cardio como punição.",options:["Completo","Estou fazendo agora","Parcial","Não fiz","Parei por segurança"]},
+        {id:"day_status",time:"20:15",text:"Como você tá chegando ao fim do dia?",context:"Energia, alimentação e recuperação entram no resumo.",options:["Bem","Mais ou menos","Cansado"]},
+        {id:"daily_close",time:"21:30",text:"Fechar o dia de hoje?",context:"Sem fechar o dia, o Ritmo não sobe.",options:["Fechar dia"]}
+      ];
+    }
+
+    const HYDRATION_TARGET_ML=4000;
+    const HYDRATION_SERVING_ML=500;
+    const HYDRATION_POINTS_PER_250ML=1;
+    const HYDRATION_SLOTS={
+      weekday:["07:15","09:00","10:45","12:30","14:15","16:00","17:45","19:30"],
+      weekend:["08:20","09:55","11:30","13:05","14:40","16:15","17:50","19:25"]
+    };
+
+    function hydrationQuestionsForDate(date=new Date()){
+      const weekend=[0,6].includes(date.getDay());
+      const slots=HYDRATION_SLOTS[weekend?"weekend":"weekday"];
+
+      return slots.map((time,index)=>({
+        id:`water_${index+1}`,
+        kind:"hydration",
+        time,
+        amountMl:HYDRATION_SERVING_ML,
+        text:`Bloco ${index+1}: registrou 500 ml de água?`,
+        context:"É o total deste bloco do dia — não é para virar 500 ml de uma vez nem beber além da sede se estiver passando mal.",
+        options:["Sim, 500 ml","Parcial, 250 ml","Ainda não","Pausar por segurança"]
+      }));
+    }
+
+    function isHydrationQuestion(questionOrId){
+      const id=typeof questionOrId==="string"?questionOrId:questionOrId?.id;
+      return String(id||"").startsWith("water_");
+    }
+
+    // Cada regra distingue evidência de saúde de uma janela operacional da
+    // rotina. Quando não existe um limite médico em minutos, o app diz isso
+    // explicitamente em vez de transformar conveniência em prescrição.
+    // Dor, tontura, falta de ar ou mal-estar sempre prevalecem sobre missão,
+    // prazo e pontuação.
+    const MISSION_RULES = {
+      wake:{waitMinutes:20,penalty:2,deferLabel:"Agora não — vou levantar",deferAnswers:["Tô levantando"],negativeAnswers:["Atrasado"],basis:"ROTINA",basisText:"Janela da sua agenda entre acordar e sair para a escola; não é um limite médico."},
+      creatine:{waitMinutes:60,penalty:1,deferLabel:"Agora não — vou fazer depois",deferAnswers:["Ainda não"],negativeAnswers:["Hoje não"],basis:"EVIDÊNCIA + ROTINA",basisText:"A consistência diária importa mais que tomar imediatamente antes ou depois do treino; 60 min é só a janela de registro da sua rotina."},
+      school_exit:{waitMinutes:20,penalty:1,deferLabel:"Responder depois",deferAnswers:["Ainda não"],basis:"ROTINA",basisText:"Janela de registro ligada ao seu horário de saída; não existe máximo médico para responder isso."},
+      lunch:{waitMinutes:45,penalty:2,deferLabel:"Agora não — vou comer depois",deferAnswers:["Ainda não"],partialAnswers:["Mais ou menos"],safetyAnswers:["Não consigo comer agora"],basis:"ROTINA + TOLERÂNCIA",basisText:"A janela termina antes do treino planejado. Horário e tolerância da refeição são individuais; isto não autoriza treinar passando mal."},
+      pre_gym:{waitMinutes:120,penalty:6,deferLabel:"Agora não — vou mais tarde",deferAnswers:["Vou mais tarde"],negativeAnswers:["Não"],safetyAnswers:["Não — saúde/segurança"],basis:"ROTINA",basisText:"Duas horas acomodam mudança real da agenda. A medicina não define um máximo para adiar treino; sintomas vencem o plano."},
+      post_gym:{waitMinutes:90,penalty:8,deferLabel:"Responder depois",progressAnswers:["Estou fazendo agora","Ainda estou fazendo"],partialAnswers:["Parcial"],negativeAnswers:["Não treinei","Parei sem concluir"],safetyAnswers:["Parei por segurança"],basis:"ROTINA + SEGURANÇA",basisText:"90 min cobrem uma sessão que se estendeu e o registro final; não são autorização médica para continuar com dor ou mal-estar."},
+      cardio:{waitMinutes:60,penalty:6,deferLabel:"Responder depois",progressAnswers:["Estou fazendo agora","Ainda estou fazendo"],partialAnswers:["Parcial"],negativeAnswers:["Não fiz","Parei sem concluir"],safetyAnswers:["Parei por segurança"],basis:"ROTINA + SEGURANÇA",basisText:"60 min seguem o bloco planejado. Não existe obrigação clínica de concluir cardio, e exercício nunca vira compensação."},
+      day_status:{waitMinutes:30,penalty:1,deferLabel:"Responder depois",basis:"CHECK-IN",basisText:"30 min capturam como você está naquele período; não representam uma janela fisiológica."},
+      daily_close:{waitMinutes:30,penalty:5,deferLabel:"Fechar depois",basis:"ROTINA",basisText:"Janela operacional antes de encerrar o dia e calcular o placar; não é recomendação médica."},
+      walk_plan:{waitMinutes:90,penalty:3,deferLabel:"Agora não — decido depois",negativeAnswers:["Não"],safetyAnswers:["Não — saúde/segurança"],basis:"ROTINA + SEGURANÇA",basisText:"90 min permitem decidir com clima, água, energia e segurança. Caminhar não deve ser forçado com sintomas."},
+      walk_done:{waitMinutes:60,penalty:6,deferLabel:"Responder depois",partialAnswers:["Fiz parte"],negativeAnswers:["Não fui"],safetyAnswers:["Parei por segurança"],basis:"ROTINA + SEGURANÇA",basisText:"60 min servem para terminar ou registrar a atividade; não são um limite médico do corpo."},
+      energy:{waitMinutes:30,penalty:1,deferLabel:"Responder depois",basis:"CHECK-IN",basisText:"30 min preservam o retrato da sua energia naquele momento; cansaço honesto não é falha."},
+      pre_cardio:{waitMinutes:20,penalty:1,deferLabel:"Responder depois",basis:"SEGURANÇA",basisText:"É um check-in próximo do treino. Fraqueza, tontura, dor no peito, falta de ar ou mal-estar significam não forçar."},
+      cardio1:{waitMinutes:40,penalty:6,deferLabel:"Responder depois",progressAnswers:["Estou fazendo agora","Ainda estou fazendo"],partialAnswers:["Parcial"],negativeAnswers:["Não","Parei sem concluir"],safetyAnswers:["Parei por segurança"],basis:"ROTINA + SEGURANÇA",basisText:"40 min acompanham o bloco planejado de cerca de 30 min com margem; não são um limite clínico para continuar."},
+      cardio2:{waitMinutes:40,penalty:6,deferLabel:"Responder depois",progressAnswers:["Estou fazendo agora","Ainda estou fazendo"],partialAnswers:["Parcial"],negativeAnswers:["Não","Parei sem concluir"],safetyAnswers:["Parei por segurança"],basis:"ROTINA + SEGURANÇA",basisText:"40 min acompanham o segundo bloco com margem; interromper por sintomas é sempre a resposta correta."},
+      food:{waitMinutes:70,penalty:2,deferLabel:"Agora não — vou comer depois",deferAnswers:["Vou comer agora","Ainda não"],safetyAnswers:["Não consigo comer agora"],basis:"EVIDÊNCIA ESPORTIVA",basisText:"O cardio termina por volta de 10:10; 70 min após a pergunta fecha às 12:10, até 2 h pós-exercício. Ingestão diária total continua mais importante que um minuto exato."},
+      recovery:{waitMinutes:30,penalty:1,deferLabel:"Responder depois",basis:"CHECK-IN",basisText:"30 min registram sua recuperação naquele período. Dor forte ou sintomas persistentes pedem avaliação, não pontos."}
+    };
+
+    function getMissionRule(id){
+      if(isHydrationQuestion(id)){
+        return {
+          waitMinutes:90,
+          penalty:0,
+          deferLabel:"Ainda não — lembrar em 5 min",
+          deferAnswers:["Ainda não"],
+          partialAnswers:["Parcial, 250 ml"],
+          safetyAnswers:["Pausar por segurança"],
+          basis:"HIDRATAÇÃO + SEGURANÇA",
+          basisText:"Os 500 ml representam um bloco distribuído, não uma dose para beber de uma vez. A meta diária é pessoal e inclui contexto, sede, comida, treino, clima e orientação profissional."
+        };
+      }
+      return MISSION_RULES[id]||{waitMinutes:30,penalty:2,deferLabel:"Agora não — responder depois",basis:"ROTINA",basisText:"Janela operacional do aplicativo; não é um limite médico."};
+    }
+
+    const RANKS=[
+      {name:"Bronze",icon:"🥉",min:0,image:"./ranks/bronze.webp"},
+      {name:"Prata",icon:"🥈",min:600,image:"./ranks/prata.webp"},
+      {name:"Ouro",icon:"🥇",min:1800,image:"./ranks/ouro.webp"},
+      {name:"Mítico",icon:"💠",min:4500,image:"./ranks/mitico.webp"},
+      {name:"Lendário",icon:"👑",min:9000,image:"./ranks/lendario.webp"},
+      {name:"Mestre",icon:"⚡",min:18000,image:"./ranks/mestre.webp"}
+    ];
+
+    const RITMO_MIN_SCORE=80;
+    // Enquanto Web Push ainda não estiver conectado, perguntas que nunca
+    // chegaram a ser mostradas não entram como "oportunidade perdida".
+    const PUSH_NOTIFICATIONS_LIVE=true;
+
+    const PHRASE_BANK = {
+      "newAccount": [
+            "Conta criada. Hoje você não precisa provar nada; só precisa começar a registrar direito.",
+            "Primeiro dia, porra. Sem histórico, sem drama: faz o que existe na sua frente.",
+            "Hoje é fundação. Não tenta parecer disciplinado; registra e age.",
+            "Você acabou de criar isso aqui. O objetivo de hoje é simples: não abandonar a ideia no mesmo dia.",
+            "Dia zero do projeto. Faz o básico aparecer e deixa o resto crescer depois.",
+            "A conta nasceu hoje. Nada de comparar com uma versão sua que ainda nem existe.",
+            "Primeiro contato. Organiza o dia e começa a construir dado de verdade.",
+            "Hoje não tem sequência pra proteger ainda. Tem uma sequência pra merecer.",
+            "Começou agora. Ótimo. A próxima decisão é o primeiro tijolo.",
+            "Sem estatística inventada no primeiro dia. Só executa o que estiver no horário."
+      ],
+      "zero": [
+            "Ritmo em zero. Chorar não multiplica ponto; fechar o próximo dia com 80+ sim.",
+            "Tá zerado. Então para de negociar e constrói o primeiro dia de verdade.",
+            "Zero não é sentença. É só o placar antes da próxima jogada.",
+            "Sem Ritmo agora. A única saída é simples: fazer o próximo fechamento direito.",
+            "Multiplicador zerado em x1.00. Quer bônus? Primeiro merece três dias.",
+            "Hoje não tem bônus de sequência. Tem trabalho básico.",
+            "Ritmo caiu? Beleza. Não tenta compensar; volta a executar.",
+            "O placar tá seco. A próxima sequência começa com um dia bem fechado.",
+            "Zero dias. Sem teatro: responde na hora e fecha com 80+.",
+            "Não existe botão secreto pra recuperar sequência. Existe o próximo dia."
+      ],
+      "oneTwo": [
+            "Você começou a sequência. Ainda não tem multiplicador, então protege essa porra.",
+            "Um ou dois dias é começo, não conquista eterna. Fecha o próximo.",
+            "Tá nascendo Ritmo. No terceiro dia o primeiro bônus aparece.",
+            "Você já saiu do zero. Agora não entrega de graça.",
+            "Falta pouco pro primeiro multiplicador. Não dorme no ponto.",
+            "Sequência curta ainda é frágil. Faz o básico no horário.",
+            "Tá construindo. A melhor coisa agora é não inventar moda.",
+            "Primeiros dias são onde a disciplina deixa de ser conversa.",
+            "Você já tem algo pra proteger. Pouco, mas tem.",
+            "Chega no terceiro dia primeiro. Depois a gente fala de bônus."
+      ],
+      "building": [
+            "O multiplicador começou. Agora cada dia perdido custa mais do que ontem.",
+            "Ritmo ganhando corpo. Mantém a cabeça no processo.",
+            "Você já tem sequência suficiente pra doer perder. Excelente.",
+            "O bônus tá vivo. Não entrega x1.05/x1.10 por preguiça de responder uma pergunta.",
+            "Consistência aparecendo. Continua sem transformar isso em obsessão.",
+            "Tá acumulando prova de que consegue repetir. Protege.",
+            "Agora o app começa a te devolver mais pontos porque você sustentou o básico.",
+            "Sequência crescendo. O segredo continua sendo chato: responder e fechar.",
+            "Você já passou da fase do 'vou começar'. Agora é manutenção.",
+            "Tá ficando sério. Faz hoje caber dentro da sequência."
+      ],
+      "solid": [
+            "Ritmo forte. Agora não confunde confiança com relaxo.",
+            "Você construiu dias demais pra entregar por uma janela de 20 minutos.",
+            "A sequência tá bonita. Protege sem paranoia.",
+            "Seu histórico começou a falar por você. Continua.",
+            "Tá funcionando porque você repetiu, não porque teve um dia perfeito.",
+            "Esse Ritmo já vale ponto de verdade. Não dá de presente.",
+            "Mais dias, mais bônus, mais responsabilidade com o básico.",
+            "Você já provou que consegue. Agora só precisa continuar provando menos e fazendo mais.",
+            "Consistência alta. Mantém simples.",
+            "Olha o tamanho da sequência. Faz a próxima decisão combinar com ela."
+      ],
+      "elite": [
+            "Isso já é Ritmo de gente teimosa. Excelente. Não inventa moda.",
+            "Sequência longa, multiplicador pesado. Protege com cabeça.",
+            "Você chegou num ponto em que o bônus foi construído durante semanas.",
+            "Ritmo alto não significa perfeição. Significa voltar pro trilho rápido.",
+            "Tá carregando um multiplicador que levou tempo pra construir. Respeita isso.",
+            "Histórico grande. Agora cada dia é continuidade, não teste.",
+            "Você construiu uma vantagem absurda no ranking. Mantém o básico vivo.",
+            "O app já tem prova suficiente de consistência. Continua sem se punir.",
+            "Sequência longa é patrimônio digital KKKK. Não entrega à toa.",
+            "Você não chegou aqui numa decisão só. Também não perde tudo por um pensamento ruim — perde se largar o processo."
+      ],
+      "goodScore": [
+            "Nota alta. Não aumenta a cobrança amanhã; repete o que funcionou.",
+            "Dia forte. Salva o padrão, não a euforia.",
+            "Boa execução. Agora não inventa um desafio idiota só porque foi bem.",
+            "Acima de 80. Ritmo protegido e trabalho feito.",
+            "Hoje funcionou. Descobre o que foi repetível.",
+            "Nota boa não é licença pra relaxar nem pra exagerar. É dado.",
+            "Você fechou bem. Amanhã começa do zero de novo.",
+            "Esse é o tipo de dia que empilha ranking sem precisar de heroísmo.",
+            "Bom fechamento. Protege o sono e deixa amanhã chegar.",
+            "Dia registrado direito. É assim que o histórico começa a valer alguma coisa."
+      ],
+      "lowScore": [
+            "A nota veio baixa. Sem castigo: identifica o que escapou e corrige o próximo bloco.",
+            "Hoje ficou abaixo de 80. O Ritmo sente, mas sua próxima decisão ainda conta.",
+            "Perdeu ponto, não perdeu o projeto inteiro.",
+            "Dia fraco no registro. A resposta não é cardio extra nem comer menos; é organizar o próximo dia.",
+            "Pontuação baixa é informação, não autorização pra se destruir.",
+            "O fechamento não bateu a média. Aprende onde as janelas escaparam.",
+            "Hoje doeu no placar. Beleza. Amanhã você já sabe o que precisa proteger.",
+            "Não tenta pagar dívida de disciplina com punição.",
+            "Abaixo de 80. Assume, registra, corrige e segue.",
+            "Um dia ruim não precisa virar uma semana ruim."
+      ],
+      "nearRank": [
+            "Tá perto do próximo rank. Não fica olhando a barra — faz o que enche ela.",
+            "Poucos pontos pro próximo rank. Vai ganhar no fechamento, não na ansiedade.",
+            "O próximo emblema tá quase vindo. Mantém o Ritmo.",
+            "Tá batendo na porta do próximo rank. Não entrega o multiplicador agora.",
+            "A barra tá chegando. Faz o dia valer.",
+            "Próximo rank perto. Melhor estratégia: continuar exatamente o básico.",
+            "Você tá quase mudando de divisão. Nada de inventar atalho.",
+            "Essa distância pro próximo rank já ficou pequena. Protege.",
+            "Tá quase. E 'quase' só vira rank quando o dia fecha.",
+            "Próximo emblema no radar. Executa."
+      ],
+      "weightProgress": [
+            "A tendência tá mexendo. Não reage a um número isolado; olha o conjunto.",
+            "Tem progresso aparecendo no peso. Mantém consistência, não pressa.",
+            "A balança tá mostrando direção. Não transforma isso em corrida.",
+            "Seu histórico começou a formar tendência. Bom: agora não sabota com extremismo.",
+            "Tá andando. O objetivo não é acelerar até quebrar.",
+            "Progresso de peso existe, mas treino, energia e rotina continuam importando.",
+            "Os números estão mudando. Continua olhando semanas, não horas.",
+            "Tem caminho percorrido. Não deixa uma oscilação de água estragar tua cabeça.",
+            "O peso tá respondendo ao tempo. Dá tempo ao tempo.",
+            "Boa direção. Continua com decisões sustentáveis."
+      ]
+};
+
+    const COMMAND_ROUTINES = {
+      "0": "DOMINGO — NÃO INVENTA DESCULPA.\nPor volta de 14:00–15:00, se a programação estiver normal, vai pra Orla de Cariacica. Ida e volta dão cerca de 7 km.\nAntes de sair: confere água, energia e o básico. Se estiver passando mal, com dor ou tontura, não força.\nVoltou? Registra o que realmente aconteceu. Nada de mentir pro app pra ganhar ponto.",
+      "1": "SEGUNDA — PEITO.\n06:35: levanta. Para de negociar com o despertador.\n06:45: creatina, se estiver mantendo a rotina.\n07:00: escola.\n14:00: saiu da escola? Vai almoçar. Termina esse bloco até mais ou menos 14:30.\n15:30–16:00: academia. Não empurra pra 'daqui a pouco' sem motivo.\nTreino: aquecimento no supino inclinado; supino inclinado 3×15; supino reto 3×15; supino declinado 3×15; voador 3×15; pullover.\nDepois: cardio do protocolo cadastrado, em torno de 30 min, sem transformar cardio em castigo.\nA consequência de enrolar é simples: você perde janela, missão e ponto. Não tem cardio extra nem cortar comida pra compensar.",
+      "2": "TERÇA — BRAÇOS.\n06:35: de pé.\n06:45: creatina, se estiver no seu padrão.\n07:00: escola.\n14:00: saiu? Almoço até perto de 14:30.\n15:30–16:00: academia.\nVai alternar bíceps e tríceps: rosca unilateral sentado; tríceps polia; barra W; corda; rosca alternada; francês com duas mãos; unilateral na polia alta; coice na polia baixa. 3×12 nos exercícios cadastrados.\nDepois entra o cardio de ~30 min.\nNão deixa 'depois eu faço' virar 'não fiz'. Responde as perguntas na hora que aparecerem.",
+      "3": "QUARTA — PERNA.\n06:35: levanta.\n06:45: creatina, se estiver seguindo a rotina.\n07:00: escola.\n14:00: almoço. Energia antes de perna não é detalhe.\n15:30–16:00: academia.\nTreino: leg press 45°, extensora, flexora, abdutora, adutora, hack e panturrilha.\nCardio hoje é curto: cerca de 10 min, porque o treino principal já é perna.\nSe sentir dor estranha, tontura ou mal-estar, para de bancar o herói e ajusta.",
+      "4": "QUINTA — COSTAS.\n06:35: levanta.\n06:45: creatina se estiver na rotina.\n07:00: escola.\n14:00: voltou? Almoça.\n15:30–16:00: academia.\nTreino: puxada alta; remada baixa; remada articulada; pullover na polia; serrote unilateral — seguindo as séries cadastradas.\nDepois, cardio de ~30 min.\nFaz o combinado no horário. Perdeu a janela da pergunta? Perde ponto. Simples.",
+      "5": "SEXTA — OMBROS E TRAPÉZIO.\n06:35: levanta, porra. Sexta não virou feriado.\n06:45: creatina se estiver mantendo o padrão.\n07:00: escola.\n14:00: chegou? Almoço até perto de 14:30.\n15:30–16:00: academia.\nHoje é desenvolvimento com halteres, elevação frontal, elevação lateral, remada alta na polia e encolhimento — 3×12 conforme seu cadastro.\nDepois entra o cardio de ~30 min.\nNão olha isso e fala 'daqui a pouco'. Ou faz no bloco planejado ou assume no registro que mudou.",
+      "6": "SÁBADO — CARDIO.\n08:15: acorda e confere como você tá.\n08:40–08:45: prepara pra sair; creatina se estiver mantendo a rotina.\n09:00: cardio. Seu padrão cadastrado é fazer dois blocos, total aproximado de 1 hora.\nSe acordar sem energia, tonto ou passando mal, não força treino em jejum só pra cumprir tabela.\nDepois do cardio, come normalmente e registra recuperação.\nDisciplina não é se punir; é parar de fugir do que você combinou."
+};
+
+
+    const DAILY_TIMELINE = {
+      0:[
+        {time:"13:50",action:"Confere se a ida pra Orla vai rolar hoje. Água e disposição primeiro."},
+        {time:"14:00–15:00",action:"Vai pra Orla de Cariacica. Ida e volta dão cerca de 7 km."},
+        {time:"17:30",action:"Já voltou? Registra como foi de verdade, sem aumentar nem diminuir história."},
+        {time:"20:10",action:"Olha sua energia no fim do domingo e registra."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      1:[
+        {time:"06:35",action:"Levanta. Para de negociar com o despertador."},
+        {time:"06:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"07:00",action:"Escola."},
+        {time:"14:00",action:"Saiu da escola? Vai direto pro bloco do almoço."},
+        {time:"14:30",action:"Termina o almoço e deixa a academia encaminhada."},
+        {time:"15:30–16:00",action:"Academia: peito. Aquecimento, supino inclinado, reto, declinado, voador e pullover."},
+        {time:"17:30",action:"Confere se o treino de peito foi concluído."},
+        {time:"18:00",action:"Cardio do protocolo cadastrado, cerca de 30 min, sem compensação."},
+        {time:"20:15",action:"Registra como ficou a alimentação do dia."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      2:[
+        {time:"06:35",action:"Levanta e começa o dia."},
+        {time:"06:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"07:00",action:"Escola."},
+        {time:"14:00",action:"Saiu da escola? Vai almoçar."},
+        {time:"14:30",action:"Finaliza o almoço e prepara a academia."},
+        {time:"15:30–16:00",action:"Academia: bíceps + tríceps alternados, seguindo as 8 séries de exercícios cadastradas."},
+        {time:"17:35",action:"Confere se o treino de braço foi concluído."},
+        {time:"18:05",action:"Cardio de aproximadamente 30 min."},
+        {time:"20:10",action:"Registra energia e recuperação."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      3:[
+        {time:"06:35",action:"Levanta."},
+        {time:"06:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"07:00",action:"Escola."},
+        {time:"14:00",action:"Saiu da escola? Almoço primeiro."},
+        {time:"14:30",action:"Termina o almoço com energia suficiente pro treino."},
+        {time:"15:30–16:00",action:"Academia: perna — leg press, extensora, flexora, abdutora, adutora, hack e panturrilha."},
+        {time:"17:40",action:"Confere se o treino de perna foi concluído."},
+        {time:"18:00",action:"Cardio curto de aproximadamente 10 min."},
+        {time:"20:10",action:"Registra como as pernas ficaram depois do treino."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      4:[
+        {time:"06:35",action:"Levanta."},
+        {time:"06:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"07:00",action:"Escola."},
+        {time:"14:00",action:"Saiu da escola? Vai almoçar."},
+        {time:"14:30",action:"Termina o almoço e prepara a academia."},
+        {time:"15:30–16:00",action:"Academia: costas — puxada alta, remada baixa, remada articulada, pullover e serrote unilateral."},
+        {time:"17:35",action:"Confere se o treino de costas foi concluído."},
+        {time:"18:05",action:"Cardio de aproximadamente 30 min."},
+        {time:"20:15",action:"Registra como ficou a alimentação."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      5:[
+        {time:"06:35",action:"Levanta, porra. Sexta não virou feriado."},
+        {time:"06:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"07:00",action:"Vai pra escola."},
+        {time:"14:00",action:"Chegou da escola? Vai almoçar."},
+        {time:"14:30",action:"Termina o almoço. Não inventa de empurrar tudo pra depois."},
+        {time:"15:30–16:00",action:"Academia: ombros e trapézio — desenvolvimento, elevação frontal, lateral, remada alta e encolhimento."},
+        {time:"17:35",action:"Confere se o treino foi concluído."},
+        {time:"18:05",action:"Cardio de aproximadamente 30 min."},
+        {time:"20:15",action:"Registra como você chegou ao fim da semana."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ],
+      6:[
+        {time:"08:15",action:"Acorda pro cardio das 9h."},
+        {time:"08:40",action:"Confere sua energia antes de sair. Se estiver tonto ou passando mal, não força."},
+        {time:"08:45",action:"Creatina, se estiver mantendo a rotina."},
+        {time:"09:00",action:"Começa o cardio.",questionId:"cardio1",journeyRole:"planned-start"},
+        {time:"09:35",action:"Primeiro bloco terminou? Registra."},
+        {time:"10:10",action:"Segundo bloco concluído. Total aproximado de 1 hora."},
+        {time:"11:00",action:"Come alguma coisa normalmente depois do cardio e registra."},
+        {time:"18:30",action:"Confere recuperação, energia e cansaço."},
+        {time:"21:30",action:"Fecha o dia no FelpFit."}
+      ]
+    };
+
+    const DAY_JOURNEY_META = {
+      0:{
+        icon:"🌊",
+        title:"Domingo — Orla / atividade",
+        subtitle:"Um dia de movimento leve, presença e recuperação. O objetivo é sair do modo parado sem transformar o domingo em prova de sofrimento.",
+        final:"Domingo fechado. Você não precisou fazer um dia perfeito: precisou olhar para o plano, registrar o que aconteceu e impedir que descanso virasse abandono. Amanhã o jogo recomeça no básico."
+      },
+      1:{
+        icon:"🫀",
+        title:"Segunda — Peito",
+        subtitle:"Escola, alimentação, treino de peito e cardio organizados em blocos. A prioridade é executar com técnica e registrar sem inventar compensação.",
+        final:"Segunda encerrada. Peito abre a semana, mas o que realmente constrói resultado é você ter sustentado o dia inteiro: levantou, cuidou da energia, treinou o que dava e fechou o placar com honestidade."
+      },
+      2:{
+        icon:"💪",
+        title:"Terça — Bíceps + Tríceps",
+        subtitle:"Treino alternado de braços, alimentação antes da academia e cardio controlado. Intensidade serve ao plano; não substitui consistência.",
+        final:"Terça concluída. Braço pode dar pump na hora, mas hábito é o que permanece. Você fechou mais um dia real, com registro real — e é esse acúmulo que muda o corpo."
+      },
+      3:{
+        icon:"🦵",
+        title:"Quarta — Perna",
+        subtitle:"O bloco mais exigente da semana pede energia, técnica e respeito aos sinais do corpo. O cardio é curto porque o treino principal já cobra bastante.",
+        final:"Quarta fechada. Treino de perna não é lugar para heroísmo burro: é controle, amplitude possível e continuidade. Se você fez o combinado com segurança, o dia cumpriu o papel dele."
+      },
+      4:{
+        icon:"🪽",
+        title:"Quinta — Costas",
+        subtitle:"Puxadas, remadas e controle de movimento. A linha do dia protege o treino de ser engolido pela tarde e mantém alimentação e cardio no lugar certo.",
+        final:"Quinta encerrada. Você não está colecionando treinos isolados; está construindo uma semana que se sustenta. Mais um fechamento honesto vale mais do que qualquer promessa exagerada."
+      },
+      5:{
+        icon:"⚡",
+        title:"Sexta — Ombros + Trapézio",
+        subtitle:"Fim da semana não é sinal para abandonar o plano. É dia de executar ombros e trapézio, fazer o cardio previsto e registrar como você realmente chegou até aqui.",
+        final:"Sexta concluída. Você atravessou a semana sem precisar fingir perfeição. O placar mostra presença, ajustes e decisões repetidas. Descansa sem culpa e não transforma o fim de semana em desistência."
+      },
+      6:{
+        icon:"🏃",
+        title:"Sábado — Cardio",
+        subtitle:"Dois blocos de cardio com checagem de energia, alimentação depois e recuperação. Se houver tontura ou mal-estar, ajustar é inteligência — não fraqueza.",
+        final:"Sábado fechado. O cardio terminou, mas a missão maior foi não usar exercício nem comida como punição. Você registrou energia, esforço e recuperação. É assim que disciplina deixa de ser castigo e vira direção."
+      }
+    };
+
+    const BAD_DAY_QUESTIONS = [
+      {
+            "id": "main",
+            "text": "O que mais pesou hoje?",
+            "options": [
+                  "Cansaço",
+                  "Escola/rotina",
+                  "Treino",
+                  "Alimentação",
+                  "Cabeça/estresse",
+                  "Outra coisa"
+            ]
+      },
+      {
+            "id": "energy",
+            "text": "Sua energia tá como?",
+            "options": [
+                  "Baixa",
+                  "Muito baixa",
+                  "Oscilando",
+                  "Até que normal"
+            ]
+      },
+      {
+            "id": "need",
+            "text": "O que mais ajudaria agora?",
+            "options": [
+                  "Descansar",
+                  "Comer uma refeição normal",
+                  "Água",
+                  "Organizar o resto do dia",
+                  "Falar com alguém",
+                  "Só ficar quieto um pouco"
+            ]
+      },
+      {
+            "id": "minimum",
+            "text": "Tem uma decisão pequena que ainda dá pra fazer hoje?",
+            "options": [
+                  "Sim",
+                  "Talvez",
+                  "Não sei agora"
+            ]
+      },
+      {
+            "id": "pressure",
+            "text": "Você tá querendo compensar o dia com exagero?",
+            "options": [
+                  "Não",
+                  "Um pouco",
+                  "Sim"
+            ]
+      }
+];
+
+
+
+
+    const safeStorage = (()=>{
+      const memory = new Map();
+
+      function hasNativeStorage(){
+        try{
+          const key="__felpfit_storage_test__";
+          window.localStorage.setItem(key,"1");
+          window.localStorage.removeItem(key);
+          return true;
+        }catch{
+          return false;
+        }
+      }
+
+      const nativeOk = hasNativeStorage();
+
+      return {
+        nativeOk,
+
+        getItem(key){
+          // Se uma escrita caiu no armazenamento de memória (ex.: quota do
+          // navegador), ele passa a ser a fonte mais nova para essa chave.
+          if(memory.has(key)) return memory.get(key);
+
+          if(nativeOk){
+            try{return window.localStorage.getItem(key)}catch{}
+          }
+          return memory.has(key) ? memory.get(key) : null;
+        },
+
+        setItem(key,value){
+          const stringValue=String(value);
+
+          if(nativeOk){
+            try{
+              window.localStorage.setItem(key,stringValue);
+              memory.delete(key);
+              return;
+            }catch{}
+          }
+
+          memory.set(key,stringValue);
+        },
+
+        removeItem(key){
+          if(nativeOk){
+            try{window.localStorage.removeItem(key)}catch{}
+          }
+          memory.delete(key);
+        },
+
+        clear(){
+          if(nativeOk){
+            try{window.localStorage.clear()}catch{}
+          }
+          memory.clear();
+        }
+      };
+    })();
+
+    function getJSON(key, fallback=null){
+      try{
+        const raw=safeStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      }catch{
+        return fallback;
+      }
+    }
+
+    function setJSON(key,value){
+      const serialized=JSON.stringify(value);
+      if(safeStorage.getItem(key)===serialized) return false;
+      safeStorage.setItem(key,serialized);
+
+      // Em desenvolvimento, qualquer mudança importante atualiza o snapshot
+      // do perfil ativo no Banco DEV sem interferir nas chaves normais do app.
+      if(DEV_MODE && Object.values(STORAGE).includes(key)){
+        scheduleDevSnapshot();
+      }
+      return true;
+    }
+
+    function makeDevProfileId(){
+      if(window.crypto && crypto.randomUUID){
+        return crypto.randomUUID();
+      }
+      return `dev-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function getDevDatabase(){
+      try{
+        return JSON.parse(safeStorage.getItem(DEV_DATABASE_KEY) || "[]");
+      }catch{
+        return [];
+      }
+    }
+
+    function setDevDatabase(database){
+      const serialized=JSON.stringify(database);
+      if(safeStorage.getItem(DEV_DATABASE_KEY)===serialized) return false;
+      safeStorage.setItem(DEV_DATABASE_KEY,serialized);
+      return true;
+    }
+
+    async function cloudRequest(path, options={}){
+      const response=await fetch(path,{
+        credentials:"same-origin",
+        headers:{"Content-Type":"application/json",...(options.headers||{})},
+        ...options
+      });
+
+      let body={};
+      try{body=await response.json()}catch{}
+
+      if(response.status===401) cloudAuthenticated=false;
+      if(!response.ok) throw new Error(body.error||`Erro ${response.status}`);
+      return body;
+    }
+
+    async function syncCloudDatabase(){
+      if(!cloudAuthenticated) return [];
+
+      const body=await cloudRequest("/api/profiles");
+      const database=(body.profiles||[]).map(item=>({
+        id:item.id,
+        name:item.name,
+        weight:Number(item.weight||0),
+        goal:Number(item.goal||0),
+        createdAt:item.createdAt,
+        updatedAt:item.updatedAt,
+        state:item.state||{}
+      }));
+
+      setDevDatabase(database);
+      renderDevDatabase();
+      return database;
+    }
+
+    function showMandatoryUpdate(previousVersion){
+      $("appUpdateTitle").textContent=`FelpFit ${APP_VERSION}`;
+      $("appUpdateNotes").innerHTML=APP_RELEASE_NOTES
+        .map(note=>`<div>✓ ${escapeHtml(note)}</div>`)
+        .join("");
+      $("appUpdateOverlay").classList.remove("hidden");
+      $("appUpdateError").textContent="";
+      appUnlocked=false;
+    }
+
+    function setStartupStage(progress,copy,detail){
+      const fill=$("startupProgress");
+      const copyEl=$("startupCopy");
+      const detailEl=$("startupDetail");
+      if(fill) fill.style.width=`${Math.max(8,Math.min(100,Number(progress)||0))}%`;
+      if(copyEl&&copy) copyEl.textContent=copy;
+      if(detailEl&&detail) detailEl.textContent=detail;
+    }
+
+    async function finishStartupLoader(minimumDuration=900){
+      if(startupFinished) return;
+      startupFinished=true;
+      setStartupStage(100,"Tudo pronto.","FelpFit preparado");
+      const remaining=Math.max(0,minimumDuration-(performance.now()-startupStartedAt));
+      if(remaining) await new Promise(resolve=>setTimeout(resolve,remaining));
+      const loader=$("startupLoader");
+      if(loader) loader.classList.add("leaving");
+      document.body.classList.remove("startup-active");
+      setTimeout(()=>loader?.remove(),480);
+    }
+
+    function compareAppVersions(a,b){
+      const left=String(a||"0").split(".").map(value=>Number(value)||0);
+      const right=String(b||"0").split(".").map(value=>Number(value)||0);
+      const length=Math.max(left.length,right.length);
+      for(let index=0;index<length;index++){
+        const difference=(left[index]||0)-(right[index]||0);
+        if(difference!==0) return difference>0?1:-1;
+      }
+      return 0;
+    }
+
+    function enforceAppVersion(){
+      const previousVersion=safeStorage.getItem(APP_VERSION_KEY);
+      const requestedVersion=new URLSearchParams(location.search).get("version");
+      const openedFromUpdate=new URLSearchParams(location.search).get("update")==="required";
+
+      // Uma instalação realmente nova começa na versão atual. Se ela veio de
+      // um aviso de update, porém, ainda mostra o resumo antes de continuar.
+      if(!previousVersion){
+        if(openedFromUpdate&&(!requestedVersion||compareAppVersions(requestedVersion,APP_VERSION)<=0)){
+          showMandatoryUpdate("versão anterior");
+          return true;
+        }
+        safeStorage.setItem(APP_VERSION_KEY,APP_VERSION);
+        return false;
+      }
+
+      if(previousVersion!==APP_VERSION){
+        showMandatoryUpdate(previousVersion);
+        return true;
+      }
+
+      return false;
+    }
+
+    async function applyMandatoryUpdate(){
+      const button=$("appUpdateButton");
+      button.disabled=true;
+      button.textContent="Atualizando...";
+      $("appUpdateError").textContent="";
+
+      try{
+        await pausePushForLogout();
+        await fetch("/api/logout",{method:"POST",credentials:"same-origin"});
+        safeStorage.setItem(APP_VERSION_KEY,APP_VERSION);
+
+        if("caches" in window){
+          const keys=await caches.keys();
+          await Promise.all(keys.filter(key=>key.startsWith("felpfit-")).map(key=>caches.delete(key)));
+        }
+
+        location.reload();
+      }catch(error){
+        console.error("FelpFit update:",error);
+        $("appUpdateError").textContent="Não consegui concluir a atualização. Verifique a internet e tente novamente.";
+        button.disabled=false;
+        button.textContent="Tentar atualizar novamente";
+      }
+    }
+
+    async function restoreCloudSession(){
+      try{
+        await cloudRequest("/api/session");
+        cloudAuthenticated=true;
+        await syncExistingPushSubscription();
+        const database=await syncCloudDatabase();
+        const profile=database.find(item=>item.id===PRIMARY_CLOUD_PROFILE_ID) || database[0];
+
+        if(profile){
+          loadDevProfile(profile.id,profile);
+          return true;
+        }
+      }catch(error){
+        cloudAuthenticated=false;
+        console.info("FelpFit: sessão ainda não autenticada.");
+      }
+
+      return false;
+    }
+
+    function scheduleCloudSnapshot(snapshot){
+      if(!cloudAuthenticated||!snapshot?.id) return;
+
+      cloudPendingSnapshot=snapshot;
+      const epoch=cloudSaveEpoch;
+      clearTimeout(cloudSaveTimer);
+
+      cloudSaveTimer=setTimeout(()=>{
+        const queued=cloudPendingSnapshot;
+        cloudPendingSnapshot=null;
+        if(!queued||epoch!==cloudSaveEpoch) return;
+
+        // Serializa as gravações. Um snapshot antigo nunca pode terminar depois
+        // de um mais novo e sobrescrever o D1.
+        cloudSaveChain=cloudSaveChain
+          .catch(()=>{})
+          .then(async()=>{
+            if(epoch!==cloudSaveEpoch) return;
+            try{
+              await cloudRequest(`/api/profiles/${encodeURIComponent(queued.id)}`,{
+                method:"PUT",
+                body:JSON.stringify(queued)
+              });
+            }catch(error){
+              console.error("FelpFit cloud save:",error);
+              toast("Não consegui sincronizar agora. Seus dados continuam salvos neste aparelho.");
+            }
+          });
+      },450);
+    }
+
+    function collectActiveState(){
+      const state={};
+
+      Object.entries(STORAGE).forEach(([name,key])=>{
+        const raw=safeStorage.getItem(key);
+        if(raw !== null) state[key]=raw;
+      });
+
+      state.felpfitBadDayMode=safeStorage.getItem("felpfitBadDayMode");
+      return state;
+    }
+
+    function ensureDevProfileIdentity(){
+      const profile=getJSON(STORAGE.profile);
+      if(!profile) return null;
+
+      if(!profile.devProfileId){
+        profile.devProfileId=makeDevProfileId();
+        // Escrita direta para não disparar snapshot antes da identidade existir.
+        safeStorage.setItem(STORAGE.profile,JSON.stringify(profile));
+      }
+
+      return profile;
+    }
+
+    function saveCurrentProfileToDevDatabase(){
+      if(!DEV_MODE) return;
+
+      const profile=ensureDevProfileIdentity();
+      if(!profile) return;
+
+      const database=getDevDatabase();
+      const now=new Date().toISOString();
+      const existingIndex=database.findIndex(item=>item.id===profile.devProfileId);
+
+      const snapshot={
+        id:profile.devProfileId,
+        name:profile.name || "Perfil sem nome",
+        weight:Number(profile.weight || 0),
+        goal:Number(profile.goal || 0),
+        createdAt:profile.createdAt || now,
+        updatedAt:now,
+        state:collectActiveState()
+      };
+
+      if(existingIndex>=0){
+        database[existingIndex]=snapshot;
+      }else{
+        database.unshift(snapshot);
+      }
+
+      database.sort((a,b)=>String(b.updatedAt).localeCompare(String(a.updatedAt)));
+      setDevDatabase(database);
+      scheduleCloudSnapshot(snapshot);
+
+      if(!$("devPanel")?.classList.contains("hidden")){
+        renderDevDatabase();
+      }
+    }
+
+    function scheduleDevSnapshot(){
+      if(!DEV_MODE) return;
+      clearTimeout(devSnapshotTimer);
+      devSnapshotTimer=setTimeout(saveCurrentProfileToDevDatabase,650);
+    }
+
+    function renderDevDatabase(){
+      const list=$("devDatabaseList");
+      if(!list) return;
+
+      const database=getDevDatabase();
+
+      if(!database.length){
+        list.innerHTML=`<div class="dev-empty">Nenhum perfil arquivado ainda. Crie um perfil e ele aparecerá aqui automaticamente.</div>`;
+        return;
+      }
+
+      const activeProfile=getJSON(STORAGE.profile);
+      const activeId=activeProfile?.devProfileId || null;
+
+      list.innerHTML=database.map(item=>{
+        const updated=item.updatedAt
+          ? new Date(item.updatedAt).toLocaleString("pt-BR")
+          : "sem data";
+
+        const active=item.id===activeId;
+
+        return `
+          <div class="dev-profile-card">
+            <div class="dev-profile-top">
+              <div>
+                <div class="dev-profile-name">${escapeHtml(item.name)} ${active ? "• ATIVO":""}</div>
+                <div class="dev-profile-meta">
+                  ${Number(item.weight || 0).toFixed(1)} kg → meta ${Number(item.goal || 0).toFixed(1)} kg<br>
+                  Atualizado: ${escapeHtml(updated)}
+                </div>
+              </div>
+              <span class="badge">${active ? "aberto":"salvo"}</span>
+            </div>
+
+            <div class="dev-profile-actions">
+              <button onclick="loadDevProfile('${item.id}')">Abrir perfil</button>
+              <button onclick="deleteDevProfile('${item.id}')">Excluir do banco</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function loadDevProfile(id, cloudSnapshot=null){
+      if(!DEV_MODE) return;
+
+      const database=cloudSnapshot ? [] : getDevDatabase();
+      const snapshot=cloudSnapshot || database.find(item=>item.id===id);
+
+      if(!snapshot){
+        toast("Esse perfil não existe mais no Banco DEV.");
+        renderDevDatabase();
+        return;
+      }
+
+      // Ao entrar pela nuvem, não arquiva o perfil local antigo: ele pode ser
+      // justamente o perfil incorreto que estamos substituindo.
+      if(!cloudSnapshot) saveCurrentProfileToDevDatabase();
+      clearTimeout(devSnapshotTimer);
+      devSnapshotTimer=null;
+      clearTimeout(cloudSaveTimer);
+      cloudSaveTimer=null;
+      cloudPendingSnapshot=null;
+      cloudSaveEpoch+=1;
+
+      Object.values(STORAGE).forEach(key=>safeStorage.removeItem(key));
+      safeStorage.removeItem("felpfitBadDayMode");
+
+      Object.entries(snapshot.state||{}).forEach(([key,raw])=>{
+        if(raw!==null && raw!==undefined){
+          safeStorage.setItem(key,raw);
+        }
+      });
+
+      const restoredProfile=getJSON(STORAGE.profile);
+
+      if(!restoredProfile){
+        toast("Esse snapshot está incompleto.");
+        renderDevDatabase();
+        return;
+      }
+
+      restoredProfile.devProfileId=snapshot.id;
+
+      if(restoredProfile.startWeight==null){
+        restoredProfile.startWeight=getStartingWeight()||restoredProfile.weight;
+      }
+
+      safeStorage.setItem(STORAGE.profile,JSON.stringify(restoredProfile));
+      migrateCalendarRemindersToOptIn();
+
+      closeDevMenu();
+      closeMenu();
+      migratePhantomMisses();
+      migrateTodayLegacyMissionOutcomes();
+      repairScheduledStateIntegrity();
+      expireScheduledQuestions();
+      settlePastMissionPenalties();
+      reconcileScheduledDaysAndRitmo();
+      updateAchievements();
+
+      $("menuButton").classList.remove("hidden");
+      $("badDayButton").classList.remove("hidden");
+      $("devMenuButton").classList.toggle("hidden",!DEV_MODE);
+      $("loginButton").classList.add("hidden");
+      $("localLoginOverlay").classList.add("hidden");
+      $("localLoginError").textContent="";
+
+      refreshCompleteNav();
+
+      const badDayActive=safeStorage.getItem("felpfitBadDayMode")==="1";
+
+      document.body.classList.toggle("bad-day",badDayActive);
+      $("badDayButton").textContent=badDayActive?"Dia ruim ativo":"Dia ruim";
+      $("badDayExitButton").classList.toggle("hidden",!badDayActive);
+
+      appUnlocked=true;
+
+      renderDashboard();
+      renderProfile();
+      renderWeekly();
+      renderCalendar();
+      renderRitmo();
+      showScreen("dashboard");
+
+      saveCurrentProfileToDevDatabase();
+      renderDevDatabase();
+
+      if(consumeCalendarNotificationIntent()){
+        // O toque no push do calendário tem prioridade sobre outros modais.
+      }else if(!maybeShowMorningWeight()){
+        setTimeout(showScheduledQuestionIfNeeded,150);
+      }
+
+      toast(`Perfil de ${restoredProfile.name} aberto.`);
+    }
+
+    function deleteDevProfile(id){
+      if(!DEV_MODE) return;
+
+      const active=getJSON(STORAGE.profile);
+      if(active?.devProfileId===id){
+        toast("Esse perfil está ativo. Resete o perfil ativo antes de excluir do Banco DEV.");
+        return;
+      }
+
+      const database=getDevDatabase().filter(item=>item.id!==id);
+      setDevDatabase(database);
+      renderDevDatabase();
+      if(cloudAuthenticated){
+        cloudRequest(`/api/profiles/${encodeURIComponent(id)}`,{method:"DELETE"})
+          .catch(error=>{
+            console.error("FelpFit cloud delete:",error);
+            toast("Excluiu deste aparelho, mas o banco online não respondeu.");
+          });
+      }
+      toast("Perfil removido do Banco DEV.");
+    }
+
+    function localDateKey(date=new Date()){
+      const y = date.getFullYear();
+      const m = String(date.getMonth()+1).padStart(2,"0");
+      const d = String(date.getDate()).padStart(2,"0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function dateFromKey(key){
+      const [y,m,d] = key.split("-").map(Number);
+      return new Date(y,m-1,d);
+    }
+
+    function daysBetween(a,b){
+      const one = new Date(a.getFullYear(),a.getMonth(),a.getDate());
+      const two = new Date(b.getFullYear(),b.getMonth(),b.getDate());
+      return Math.round((two-one)/86400000);
+    }
+
+    function escapeHtml(value){
+      return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function toast(message){
+      const el = $("toast");
+      el.textContent = message;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=>el.classList.remove("show"),2200);
+    }
+
+    function showScreen(id){
+      document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+      $(id).classList.add("active");
+
+      document.querySelectorAll("[data-nav]").forEach(btn=>{
+        btn.classList.toggle("active",btn.dataset.nav===id);
+      });
+
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+
+    function toggleMenu(){
+      $("drawer").classList.toggle("open");
+      $("drawerOverlay").classList.toggle("open");
+    }
+
+    function closeMenu(){
+      $("drawer").classList.remove("open");
+      $("drawerOverlay").classList.remove("open");
+    }
+
+    async function logoutFelpFit(){
+      if(!confirm("Sair da sua conta neste aparelho?")) return;
+      closeMenu();
+      try{
+        await pausePushForLogout();
+        await fetch("/api/logout",{method:"POST",credentials:"same-origin"});
+      }catch(error){
+        console.error("FelpFit logout:",error);
+      }
+      cloudAuthenticated=false;
+      appUnlocked=false;
+      if($("scheduledQuestionOverlay")) $("scheduledQuestionOverlay").classList.add("hidden");
+      if($("notificationModal")) $("notificationModal").classList.add("hidden");
+      $("menuButton").classList.add("hidden");
+      $("badDayButton").classList.add("hidden");
+      $("badDayExitButton").classList.add("hidden");
+      $("loginButton").classList.remove("hidden");
+      showScreen("welcome");
+      toast("Você saiu da conta. Seus dados continuam salvos.");
+    }
+
+    function toggleDevMenu(){
+      if(!DEV_MODE) return;
+      $("devPanel").classList.toggle("hidden");
+
+      if(!$("devPanel").classList.contains("hidden")){
+        saveCurrentProfileToDevDatabase();
+        renderDevDatabase();
+      }
+    }
+
+    function closeDevMenu(){
+      $("devPanel").classList.add("hidden");
+    }
+
+    function resetEverything(){
+      if(!DEV_MODE) return;
+
+      const button=$("devResetButton");
+      const now=Date.now();
+
+      // Primeiro clique arma o reset por 5 segundos.
+      if(now > resetArmedUntil){
+        resetArmedUntil=now+5000;
+
+        if(button){
+          button.classList.add("reset-armed");
+          button.textContent="⚠️ Clique de novo para confirmar";
+        }
+
+        toast("Reset armado por 5 segundos. Clique novamente para confirmar.");
+
+        setTimeout(()=>{
+          if(Date.now()>resetArmedUntil && button){
+            button.classList.remove("reset-armed");
+            button.textContent="🧨 Resetar perfil ativo";
+          }
+        },5100);
+
+        return;
+      }
+
+      // Antes de apagar, arquiva o perfil atual no Banco DEV.
+      saveCurrentProfileToDevDatabase();
+
+      // Impede snapshot atrasado de recriar os dados apagados.
+      clearTimeout(devSnapshotTimer);
+      devSnapshotTimer=null;
+
+      // Limpa APENAS os dados do perfil ativo.
+      Object.values(STORAGE).forEach(key=>{
+        safeStorage.removeItem(key);
+      });
+
+      safeStorage.removeItem("felpfitBadDayMode");
+
+      resetArmedUntil=0;
+
+      if(button){
+        button.classList.remove("reset-armed");
+        button.textContent="🧨 Resetar perfil ativo";
+      }
+
+      // Volta o app inteiro ao estado inicial SEM navegar/recarregar file://.
+      document.body.classList.remove("bad-day");
+      document.body.classList.remove("mode-transition");
+      if($("scheduledQuestionOverlay")) $("scheduledQuestionOverlay").classList.add("hidden");
+      if($("rankUpOverlay")) $("rankUpOverlay").classList.add("hidden");
+      if($("rankDetailsOverlay")) $("rankDetailsOverlay").classList.add("hidden");
+      if($("dailyResultOverlay")) $("dailyResultOverlay").classList.add("hidden");
+      if($("localLoginOverlay")) $("localLoginOverlay").classList.add("hidden");
+      if($("morningWeightOverlay")) $("morningWeightOverlay").classList.add("hidden");
+      if($("badDayQuestionnaireOverlay")) $("badDayQuestionnaireOverlay").classList.add("hidden");
+      if($("calendarEditorOverlay")) $("calendarEditorOverlay").classList.add("hidden");
+      if($("calendarDetailOverlay")) $("calendarDetailOverlay").classList.add("hidden");
+      appUnlocked=false;
+
+      closeDevMenu();
+      closeMenu();
+
+      step=1;
+      selectedVibe="";
+
+      // Limpa o formulário inicial para o próximo perfil.
+      ["name","age","height","weight","goal"].forEach(id=>{
+        if($(id)) $(id).value="";
+      });
+
+      if($("training")) $("training").value="";
+      if($("focus")) $("focus").value="";
+
+      document.querySelectorAll(".choice").forEach(c=>c.classList.remove("active"));
+
+      if($("menuButton")) $("menuButton").classList.add("hidden");
+      if($("loginButton")) $("loginButton").classList.remove("hidden");
+      if($("badDayButton")){
+        $("badDayButton").classList.add("hidden");
+        $("badDayButton").textContent="Dia ruim";
+      }
+      if($("badDayExitButton")) $("badDayExitButton").classList.add("hidden");
+
+      // O menu DEV continua disponível mesmo sem perfil, justamente para
+      // permitir restaurar um perfil arquivado.
+      if($("devMenuButton")){
+        $("devMenuButton").classList.toggle("hidden", !DEV_MODE);
+      }
+
+      refreshCompleteNav();
+      renderDevDatabase();
+      renderStep();
+      showScreen("welcome");
+
+      toast("Perfil ativo resetado. Você voltou ao início.");
+    }
+
+    function animateColorMode(callback){
+      document.body.classList.remove("mode-transition");
+      void document.body.offsetWidth;
+      document.body.classList.add("mode-transition");
+
+      setTimeout(callback, 110);
+      setTimeout(()=>document.body.classList.remove("mode-transition"), 760);
+    }
+
+    function refreshCompleteNav(){
+      const complete = getJSON(STORAGE.complete,{});
+      const button = $("completeNavButton");
+      if(button) button.classList.toggle("hidden", Boolean(complete.completed));
+    }
+
+    function openCompleteFromSettings(){
+      loadCompleteProfile();
+      showScreen("complete");
+    }
+
+    function showLocalLogin(){
+      appUnlocked=false;
+      $("localLoginUser").value="";
+      $("localLoginPass").value="";
+      $("localLoginError").textContent="";
+      $("localLoginOverlay").classList.remove("hidden");
+
+      if($("scheduledQuestionOverlay")) $("scheduledQuestionOverlay").classList.add("hidden");
+      if($("morningWeightOverlay")) $("morningWeightOverlay").classList.add("hidden");
+    }
+
+    function closeLogin(){
+      $("localLoginOverlay").classList.add("hidden");
+      $("localLoginError").textContent="";
+      $("localLoginPass").value="";
+    }
+
+    async function unlockLocalLogin(){
+      const user=$("localLoginUser").value.trim().toLowerCase();
+      const pass=$("localLoginPass").value;
+
+      $("localLoginError").textContent="Entrando...";
+
+      try{
+        await cloudRequest("/api/login",{
+          method:"POST",
+          body:JSON.stringify({username:user,password:pass})
+        });
+        cloudAuthenticated=true;
+        await syncExistingPushSubscription();
+      }catch{
+        $("localLoginError").textContent="Usuário ou senha errados.";
+        return;
+      }
+
+      let database=[];
+      try{database=await syncCloudDatabase()}catch(error){
+        console.error("FelpFit cloud load:",error);
+      }
+
+      const localProfile=getJSON(STORAGE.profile);
+      // Esta instalação possui uma conta principal. Nunca deixa um perfil
+      // local antigo escolher qual registro da nuvem será aberto.
+      const remoteProfile=database.find(item=>item.id===PRIMARY_CLOUD_PROFILE_ID) || database[0];
+
+      if(remoteProfile){
+        try{
+          loadDevProfile(remoteProfile.id,remoteProfile);
+          return;
+        }catch(error){
+          console.error("FelpFit cloud restore:",error);
+          $("localLoginError").textContent="Não consegui abrir o perfil. Atualize a página e tente novamente.";
+          return;
+        }
+      }
+
+      appUnlocked=true;
+      $("localLoginOverlay").classList.add("hidden");
+      $("localLoginError").textContent="";
+      $("loginButton").classList.add("hidden");
+
+      migrateCalendarRemindersToOptIn();
+      if(localProfile) saveCurrentProfileToDevDatabase();
+
+      renderDashboard();
+
+      if(consumeCalendarNotificationIntent()){
+        // A rotina aberta pelo push continua disponível mesmo após login manual.
+      }else if(!maybeShowMorningWeight()){
+        setTimeout(showScheduledQuestionIfNeeded,180);
+      }
+    }
+
+    function lockLocalLogin(){
+      if(!getJSON(STORAGE.profile)) return;
+      showLocalLogin();
+    }
+
+    function getDailyWeightState(){
+      return getJSON(STORAGE.dailyWeight,{});
+    }
+
+    function setDailyWeightState(state){
+      setJSON(STORAGE.dailyWeight,state);
+    }
+
+    function hasWeightForDate(key){
+      const weights=getJSON(STORAGE.weights,[]);
+      return weights.some(item=>item.date===key);
+    }
+
+    function maybeShowMorningWeight(){
+      const profile=getJSON(STORAGE.profile);
+      if(!profile || !appUnlocked) return false;
+
+      // Uma pergunta aberta por notificação tem prioridade. Antes, a pesagem
+      // podia aparecer por cima dela e dar a impressão de que nada abriu.
+      const scheduledOverlay=$("scheduledQuestionOverlay");
+      if(scheduledOverlay && !scheduledOverlay.classList.contains("hidden")){
+        return false;
+      }
+
+      const today=localDateKey();
+
+      // O peso informado no cadastro já vale como registro no dia de criação.
+      if(hasWeightForDate(today)) return false;
+
+      const state=getDailyWeightState();
+
+      if(state[today]?.done || state[today]?.skipped){
+        return false;
+      }
+
+      const hour=new Date().getHours();
+
+      $("morningWeightInput").value="";
+      $("morningWeightTiming").textContent=hour<=11
+        ? "Boa hora para padronizar a pesagem."
+        : "Já passou da manhã. Se você já comeu/bebeu bastante, pode pular hoje e voltar ao padrão amanhã.";
+
+      $("morningWeightOverlay").classList.remove("hidden");
+      return true;
+    }
+
+    function saveMorningWeight(){
+      const weight=Number($("morningWeightInput").value);
+
+      if(!weight || weight<25 || weight>350){
+        toast("Coloca um peso válido.");
+        return;
+      }
+
+      const today=localDateKey();
+      let weights=getJSON(STORAGE.weights,[]);
+      const existing=weights.findIndex(item=>item.date===today);
+
+      const row={
+        date:today,
+        weight,
+        source:"morning",
+        createdAt:new Date().toISOString()
+      };
+
+      if(existing>=0) weights[existing]=row;
+      else weights.push(row);
+
+      weights.sort((a,b)=>a.date.localeCompare(b.date));
+      setJSON(STORAGE.weights,weights);
+
+      const profile=getJSON(STORAGE.profile);
+      profile.weight=weight;
+      profile.bmi=calculateBmi(weight,profile.height);
+      setJSON(STORAGE.profile,profile);
+
+      const state=getDailyWeightState();
+      state[today]={done:true,at:new Date().toISOString()};
+      setDailyWeightState(state);
+
+      $("morningWeightOverlay").classList.add("hidden");
+      renderDashboard();
+      toast("Peso da manhã salvo.");
+
+      setTimeout(showScheduledQuestionIfNeeded,150);
+    }
+
+    function skipMorningWeight(){
+      const today=localDateKey();
+      const state=getDailyWeightState();
+      state[today]={skipped:true,at:new Date().toISOString()};
+      setDailyWeightState(state);
+
+      $("morningWeightOverlay").classList.add("hidden");
+      toast("Pesagem pulada hoje.");
+
+      setTimeout(showScheduledQuestionIfNeeded,150);
+    }
+
+    function calculateGoalEstimate(){
+      const profile=getJSON(STORAGE.profile);
+      const weights=getJSON(STORAGE.weights,[])
+        .filter(x=>x.source==="morning" && Number.isFinite(Number(x.weight)) && x.date)
+        .slice()
+        .sort((a,b)=>a.date.localeCompare(b.date));
+
+      if(!profile || weights.length<4){
+        return {
+          ready:false,
+          text:"Ainda não dá pra estimar.",
+          detail:"Quero pelo menos 4 pesagens da manhã antes de desenhar uma tendência."
+        };
+      }
+
+      const firstDate=dateFromKey(weights[0].date);
+      const lastDate=dateFromKey(weights[weights.length-1].date);
+      const span=Math.max(0,daysBetween(firstDate,lastDate));
+
+      if(span<7){
+        return {
+          ready:false,
+          text:"Ainda juntando uma semana de dados.",
+          detail:"Poucos dias deixam qualquer previsão muito sensível a água e variações normais."
+        };
+      }
+
+      const xs=weights.map(x=>daysBetween(firstDate,dateFromKey(x.date)));
+      const ys=weights.map(x=>Number(x.weight));
+      const xMean=xs.reduce((a,b)=>a+b,0)/xs.length;
+      const yMean=ys.reduce((a,b)=>a+b,0)/ys.length;
+
+      let numerator=0;
+      let denominator=0;
+
+      xs.forEach((x,i)=>{
+        numerator+=(x-xMean)*(ys[i]-yMean);
+        denominator+=(x-xMean)*(x-xMean);
+      });
+
+      const slope=denominator ? numerator/denominator : 0;
+      const current=Number(profile.weight);
+      const goal=Number(profile.goal);
+      const remaining=current-goal;
+
+      if(remaining<=0){
+        return {
+          ready:true,
+          text:"Sua meta numérica já foi alcançada.",
+          detail:"Agora o número sozinho não decide o próximo passo."
+        };
+      }
+
+      if(slope>=-0.01){
+        return {
+          ready:false,
+          text:"Sem tendência de queda suficiente pra projetar.",
+          detail:"Isso não é ruim: só significa que o histórico ainda não aponta uma data minimamente útil."
+        };
+      }
+
+      let projectedDays=Math.round(remaining/Math.abs(slope));
+      projectedDays=Math.max(7,Math.min(730,projectedDays));
+
+      const projected=new Date();
+      projected.setDate(projected.getDate()+projectedDays);
+
+      const weeks=Math.max(1,Math.round(projectedDays/7));
+
+      return {
+        ready:true,
+        text:`Projeção matemática: perto de ${projected.toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}.`,
+        detail:`Se a tendência recente ficasse parecida, seriam aproximadamente ${weeks} semanas. Isso NÃO é uma meta de velocidade.`
+      };
+    }
+
+    function renderGoalEstimate(){
+      if(!$("goalEstimateText")) return;
+
+      const estimate=calculateGoalEstimate();
+      const profile=getJSON(STORAGE.profile);
+
+      $("goalEstimateText").textContent=estimate.text;
+      $("goalEstimateDetail").textContent=profile?.age<20
+        ? `${estimate.detail} Como você tem menos de 20 anos, isso é só extrapolação matemática e não define um ritmo ideal de mudança de peso.`
+        : estimate.detail;
+    }
+
+    function selectHomeCategory(category){
+      document.querySelectorAll(".home-category").forEach(el=>{
+        el.classList.toggle("active",el.id===`homeCategory-${category}`);
+      });
+
+      document.querySelectorAll("[data-home-tab]").forEach(btn=>{
+        btn.classList.toggle("active",btn.dataset.homeTab===category);
+      });
+
+      if(category==="week") renderWeekPanel();
+      if(category==="missions") renderMissions();
+      if(category==="rank") renderRank();
+      if(category==="progress") renderDashboardMetricsOnly();
+    }
+
+    function formatAccountCreated(profile){
+      if(!profile?.createdAt) return "Conta criada em data desconhecida";
+
+      const created=new Date(profile.createdAt);
+      const today=new Date();
+      const sameDay=localDateKey(created)===localDateKey(today);
+
+      const time=created.toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+      const date=created.toLocaleDateString("pt-BR");
+
+      return sameDay
+        ? `🕒 Conta criada hoje às ${time}`
+        : `🕒 Conta criada em ${date} às ${time}`;
+    }
+
+    function renderAccountCreatedInfo(){
+      const profile=getJSON(STORAGE.profile);
+      if(!profile) return;
+
+      if($("accountCreatedText")){
+        $("accountCreatedText").textContent=formatAccountCreated(profile);
+      }
+    }
+
+    function renderDashboardMetricsOnly(){
+      const profile=getJSON(STORAGE.profile);
+      if(!profile) return;
+
+      const ritmo=getJSON(STORAGE.ritmo,{current:0,best:0});
+
+      $("dashWeight").textContent=`${Number(profile.weight).toFixed(1)} kg`;
+      $("dashGoal").textContent=`Meta: ${Number(profile.goal).toFixed(1)} kg`;
+      $("dashBmi").textContent=Number(profile.bmi).toFixed(1);
+      $("dashTraining").textContent=profile.training;
+      $("dashFocus").textContent=getFocusLabel(profile.focus);
+      $("dashRitmo").textContent=`${ritmo.current||0} ${(ritmo.current||0)===1?"dia":"dias"} 🪐`;
+
+      const startWeight=Number(profile.startWeight ?? getStartingWeight() ?? profile.weight);
+      const currentWeight=Number(profile.weight);
+      const goalWeight=Number(profile.goal);
+      const totalDistance=Math.abs(startWeight-goalWeight);
+      const remainingDistance=Math.abs(currentWeight-goalWeight);
+      let remainingPercent=totalDistance>0?(remainingDistance/totalDistance)*100:0;
+      remainingPercent=Math.max(0,Math.min(100,remainingPercent));
+
+      $("goalFill").style.width=`${remainingPercent}%`;
+      $("goalProgressText").textContent=`${Math.round(100-remainingPercent)}% do caminho concluído`;
+
+      if(currentWeight>goalWeight){
+        $("goalRemainingText").textContent=`${(currentWeight-goalWeight).toFixed(1)} kg restantes`;
+      }else if(currentWeight<goalWeight){
+        $("goalRemainingText").textContent=`${(goalWeight-currentWeight).toFixed(1)} kg abaixo da meta`;
+      }else{
+        $("goalRemainingText").textContent="Meta atingida";
+      }
+
+      renderGoalEstimate();
+    }
+
+    function navigate(id){
+      closeMenu();
+      closeDevMenu();
+      reconcileScheduledDaysAndRitmo();
+
+      if(id==="dashboard") renderDashboard();
+      if(id==="calendar") renderCalendar();
+      if(id==="weekly") renderWeekly();
+      if(id==="profile") renderProfile();
+      if(id==="complete") loadCompleteProfile();
+      if(id==="ritmo") renderRitmo();
+
+      showScreen(id);
+    }
+
+    function startOnboarding(){
+      showScreen("onboarding");
+      renderStep();
+    }
+
+    function renderStep(){
+      document.querySelectorAll(".step").forEach((el,i)=>{
+        el.classList.toggle("hidden",i!==step-1);
+      });
+
+      $("stepText").textContent=`Etapa ${step} de 4`;
+      $("progressFill").style.width=`${step*25}%`;
+      $("backBtn").style.visibility=step===1?"hidden":"visible";
+      $("nextBtn").textContent=step===4?"Finalizar":"Continuar";
+    }
+
+    function prevStep(){
+      if(step>1){
+        step--;
+        renderStep();
+      }
+    }
+
+    function pickVibe(el){
+      document.querySelectorAll(".choice").forEach(c=>c.classList.remove("active"));
+      el.classList.add("active");
+      selectedVibe=el.dataset.vibe;
+    }
+
+    function validateStep(){
+      if(step===1 && (!$("name").value.trim() || !$("age").value || !$("height").value)){
+        alert("Preenche nome, idade e altura primeiro.");
+        return false;
+      }
+
+      if(step===2 && (!$("weight").value || !$("goal").value)){
+        alert("Preenche o peso atual e a meta.");
+        return false;
+      }
+
+      if(step===3 && (!$("training").value || !$("focus").value)){
+        alert("Seleciona treino por semana e foco.");
+        return false;
+      }
+
+      if(step===4 && !selectedVibe){
+        alert("Escolhe uma vibe pras mensagens.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function nextStep(){
+      if(!validateStep()) return;
+
+      if(step<4){
+        step++;
+        renderStep();
+      }else{
+        buildProfile();
+      }
+    }
+
+    function calculateBmi(weight,heightCm){
+      return weight/Math.pow(heightCm/100,2);
+    }
+
+    function buildProfile(){
+      const now = new Date();
+      const profile = {
+        name:$("name").value.trim(),
+        age:Number($("age").value),
+        height:Number($("height").value),
+        weight:Number($("weight").value),
+        goal:Number($("goal").value),
+        training:$("training").value,
+        focus:$("focus").value,
+        vibe:selectedVibe,
+        createdAt:now.toISOString(),
+        startWeight:Number($("weight").value),
+        devProfileId:makeDevProfileId()
+      };
+
+      profile.bmi=calculateBmi(profile.weight,profile.height);
+      setJSON(STORAGE.profile,profile);
+
+      const today = localDateKey(now);
+
+      setJSON(STORAGE.ritmo,{
+        current:0,
+        best:0,
+        startedAt:today,
+        lastEvaluatedDate:today
+      });
+
+      setJSON(STORAGE.scheduledAnswers,getJSON(STORAGE.scheduledAnswers,{}));
+      setJSON(STORAGE.rank,getJSON(STORAGE.rank,{points:0}));
+      setJSON(STORAGE.missions,getJSON(STORAGE.missions,{daily:{},weekly:{},monthly:{}}));
+      setJSON(STORAGE.badDays,getJSON(STORAGE.badDays,{}));
+      setJSON(STORAGE.calendarCustom,getJSON(STORAGE.calendarCustom,{}));
+      setJSON(STORAGE.calendarAssets,getJSON(STORAGE.calendarAssets,{}));
+      safeStorage.setItem(STORAGE.calendarReminderOptIn,"1");
+      setJSON(STORAGE.weights,[{
+        date:today,
+        weight:profile.weight,
+        source:"signup",
+        createdAt:now.toISOString()
+      }]);
+
+      const dailyWeightState=getJSON(STORAGE.dailyWeight,{});
+      dailyWeightState[today]={done:true,source:"signup",at:now.toISOString()};
+      setJSON(STORAGE.dailyWeight,dailyWeightState);
+
+      saveCurrentProfileToDevDatabase();
+      showScreen("loading");
+
+      const texts=[
+        "Calculando ponto de partida.",
+        "Preparando seu Ritmo — ele começa em zero.",
+        "Preparando suas 15 perguntas.",
+        "Sem vender sua alma pra nenhuma assinatura."
+      ];
+
+      let i=0;
+      const timer=setInterval(()=>{
+        i++;
+        if(i<texts.length) $("loadingText").textContent=texts[i];
+      },700);
+
+      setTimeout(()=>{
+        clearInterval(timer);
+        renderResult(profile);
+        showScreen("result");
+      },2800);
+    }
+
+    function adultBmiInfo(bmi,vibe){
+      let label,msg;
+
+      if(bmi<18.5){
+        label="Abaixo da faixa adulta de referência";
+        msg="Seu ponto de partida pede cuidado com ganho ou manutenção de peso, não uma corrida para emagrecer. O foco deve ser alimentação suficiente, treino bem estruturado e acompanhamento profissional se necessário.";
+      }else if(bmi<25){
+        label="Faixa adulta de referência";
+        msg="Seu IMC está na faixa adulta de referência. A missão aqui não precisa ser perseguir um número menor a qualquer custo: dá pra focar em composição corporal, força, condicionamento e hábitos repetíveis.";
+      }else if(bmi<30){
+        label="Acima da faixa adulta de referência";
+        msg="Tem espaço para reduzir gordura corporal, mas sem loucura. Vamos mirar constância, treino, alimentação organizada e uma tendência gradual do peso.";
+      }else{
+        label="Bem acima da faixa adulta de referência";
+        msg="Seu ponto de partida sugere que perder peso pode trazer benefícios, mas a ideia é fazer isso com segurança e consistência. Vale acompanhamento profissional, principalmente antes de mudanças grandes em dieta ou treino.";
+      }
+
+      if(vibe==="zoeiro") msg+=" E não, cardio de castigo por ter comido não entra no plano, animal 😂";
+      if(vibe==="direto") msg+=" Faz o básico bem feito por tempo suficiente.";
+      if(vibe==="motivador") msg+=" Você não precisa acertar tudo; precisa continuar acertando a próxima decisão.";
+
+      return {label,msg};
+    }
+
+    function renderResult(profile){
+      $("resultTitle").textContent=`${profile.name}, seu perfil tá pronto.`;
+      $("bmiValue").textContent=profile.bmi.toFixed(1);
+
+      if(profile.age<20){
+        $("bmiLabel").textContent="IMC bruto";
+        $("minorNote").classList.remove("hidden");
+
+        let msg="Esse número é só um dado inicial. Como você ainda está em fase de crescimento, eu não vou te encaixar nas categorias de IMC adulto. Pra avaliar peso em adolescentes de verdade, entram idade, sexo e curvas de crescimento.";
+
+        if(profile.vibe==="zoeiro"){
+          msg+=" Ou seja: nada de um número aleatório mandar na tua cabeça, porra 😂";
+        }
+
+        $("bmiMessage").textContent=msg;
+      }else{
+        $("minorNote").classList.add("hidden");
+        const info=adultBmiInfo(profile.bmi,profile.vibe);
+        $("bmiLabel").textContent=info.label;
+        $("bmiMessage").textContent=info.msg;
+      }
+    }
+
+    function showJokePaywall(){showScreen("paywall")}
+    function revealFree(){showScreen("freeReveal")}
+
+    function openDashboard(){
+      appUnlocked=true;
+      $("menuButton").classList.remove("hidden");
+      $("badDayButton").classList.remove("hidden");
+      reconcileScheduledDaysAndRitmo();
+      renderDashboard();
+      showScreen("dashboard");
+    }
+
+    function updateClock(){
+      const now=new Date();
+      const minuteKey=`${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}-${now.getMinutes()}`;
+      if(minuteKey===lastClockMinute) return;
+      lastClockMinute=minuteKey;
+
+      $("clockTime").textContent=now.toLocaleTimeString("pt-BR",{
+        hour:"2-digit",
+        minute:"2-digit"
+      });
+
+      $("clockDate").textContent=now.toLocaleDateString("pt-BR",{
+        weekday:"long",
+        day:"2-digit",
+        month:"long"
+      });
+    }
+
+    function getFocusLabel(value){
+      return ({
+        emagrecer:"Emagrecer",
+        recompor:"Recomposição",
+        habitos:"Hábitos"
+      })[value] || value;
+    }
+
+    function getVibeLabel(value){
+      return ({
+        calmo:"Calmo e objetivo",
+        direto:"Direto ao ponto",
+        zoeiro:"Zoeiro",
+        motivador:"Motivador"
+      })[value] || value;
+    }
+
+    function dayKeyFromIndex(index){
+      return ["sunday","monday","tuesday","wednesday","thursday","friday","saturday"][index];
+    }
+
+    function dayLabelFromIndex(index){
+      return ["Domingo","Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"][index];
+    }
+
+    function unlockMascotIfNeeded(){
+      const ritmo=getJSON(STORAGE.ritmo,{current:0,best:0});
+      const mascot=getJSON(STORAGE.mascot,{name:"",unlocked:false});
+
+      if((ritmo.best || 0)>=3 && !mascot.unlocked){
+        mascot.unlocked=true;
+        setJSON(STORAGE.mascot,mascot);
+      }
+    }
+
+
+    function getScheduledState(){
+      return getJSON(STORAGE.scheduledAnswers,{});
+    }
+
+    function getScheduledQuestionsForDate(date=new Date()){
+      const base=SCHEDULED_QUESTIONS[date.getDay()]||[];
+      const profile=getJSON(STORAGE.profile);
+
+      if(!profile?.createdAt) return base;
+
+      const dateKey=localDateKey(date);
+      const createdKey=localDateKey(new Date(profile.createdAt));
+
+      // Regra definitiva: o dia em que a conta é criada é Dia 0.
+      // Nenhuma pergunta, missão diária ou falha entra nesse dia.
+      if(dateKey===createdKey){
+        return [];
+      }
+
+      // Nada anterior à criação da conta entra no sistema.
+      if(dateKey<createdKey){
+        return [];
+      }
+
+      return [...base,...hydrationQuestionsForDate(date)]
+        .sort((a,b)=>minutesFromClock(a.time)-minutesFromClock(b.time));
+    }
+
+    function getRoutineQuestionsForDate(date=new Date()){
+      return getScheduledQuestionsForDate(date).filter(question=>!isHydrationQuestion(question));
+    }
+
+    function getTodayScheduledQuestions(){
+      return getScheduledQuestionsForDate(new Date());
+    }
+
+    function minutesFromClock(clock){
+      const [h,m]=clock.split(":").map(Number);
+      return h*60+m;
+    }
+
+    function currentMinutes(){
+      const n=new Date();
+      return n.getHours()*60+n.getMinutes();
+    }
+
+    function getTodayScheduledEntry(){
+      const all=getScheduledState();
+      const key=localDateKey();
+      return normalizeScheduledEntry(all[key]);
+    }
+
+    function normalizeScheduledEntry(entry={}){
+      entry.answers=entry.answers||{};
+      entry.missed=entry.missed||[];
+      entry.shown=entry.shown||{};
+      entry.deferred=entry.deferred||{};
+      entry.inProgress=entry.inProgress||{};
+      entry.notCompleted=entry.notCompleted||{};
+      entry.finalized=Boolean(entry.finalized);
+      entry.pointsAwarded=Boolean(entry.pointsAwarded);
+      return entry;
+    }
+
+    function setTodayScheduledEntry(entry){
+      const all=getScheduledState();
+      all[localDateKey()]=entry;
+      setJSON(STORAGE.scheduledAnswers,all);
+    }
+
+    function migratePhantomMisses(){
+      const all=getScheduledState();
+      let changed=false;
+
+      Object.entries(all).forEach(([key,entry])=>{
+        if(!entry || entry.finalizedAt) return;
+
+        entry.shown=entry.shown||{};
+
+        const cleaned=(entry.missed||[]).filter(id=>Boolean(entry.shown[id]));
+
+        if(cleaned.length!==(entry.missed||[]).length){
+          entry.missed=cleaned;
+          changed=true;
+        }
+      });
+
+      if(changed){
+        setJSON(STORAGE.scheduledAnswers,all);
+      }
+    }
+
+    // Corrige apenas registros do formato antigo, sem permitir edição manual.
+    // “Ainda não/estou fazendo” vira espera com o horário original; “não” e
+    // parcial ganham o resultado definitivo e a cor/consequência corretas.
+    function migrateTodayLegacyMissionOutcomes(){
+      const entry=getTodayScheduledEntry();
+      if(entry.finalized||entry.finalizedAt) return false;
+
+      const now=Date.now();
+      let changed=false;
+
+      getTodayScheduledQuestions().forEach(question=>{
+        const stored=entry.answers?.[question.id];
+        if(!stored) return;
+
+        const answer=journeyAnswerText(stored);
+        const rule=getMissionRule(question.id);
+        const answeredAt=typeof stored==="object"&&stored.answeredAt
+          ? stored.answeredAt
+          : entry.shown?.[question.id]||new Date().toISOString();
+
+        const holdType=(rule.progressAnswers||[]).includes(answer)
+          ? "progress"
+          : (rule.deferAnswers||[]).includes(answer)
+            ? "deferred"
+            : "";
+
+        if(holdType){
+          const startedMs=new Date(answeredAt).getTime();
+          const safeStarted=Number.isFinite(startedMs)?startedMs:now;
+          const expiresMs=safeStarted+rule.waitMinutes*60000;
+          delete entry.answers[question.id];
+          delete entry.notCompleted[question.id];
+
+          if(now<expiresMs){
+            const hold={
+              startedAt:new Date(safeStarted).toISOString(),
+              updatedAt:new Date().toISOString(),
+              nextPromptAt:new Date(now).toISOString(),
+              expiresAt:new Date(expiresMs).toISOString(),
+              reminderMinutes:5,
+              maxMinutes:rule.waitMinutes,
+              penalty:rule.penalty,
+              attempts:1,
+              sourceAnswer:answer,
+              migrated:true
+            };
+            entry[holdType==="progress"?"inProgress":"deferred"][question.id]=hold;
+          }else{
+            if(!entry.missed.includes(question.id)) entry.missed.push(question.id);
+            markMissionNotCompleted(entry,question,"expired","Espera antiga encerrada no prazo original");
+          }
+          changed=true;
+          return;
+        }
+
+        let outcome="complete";
+        if((rule.safetyAnswers||[]).includes(answer)) outcome="safety";
+        if((rule.negativeAnswers||[]).includes(answer)) outcome="not-completed";
+        if((rule.partialAnswers||[]).includes(answer)) outcome="partial";
+
+        const currentOutcome=typeof stored==="object"?stored.outcome:"";
+        const normalizedAnswer={answer,outcome,answeredAt};
+        if(isHydrationQuestion(question)){
+          normalizedAnswer.amountMl=answer==="Sim, 500 ml"
+            ? 500
+            : answer==="Parcial, 250 ml"
+              ? 250
+              : 0;
+        }
+        const amountChanged=isHydrationQuestion(question)
+          && Number(stored?.amountMl||0)!==Number(normalizedAnswer.amountMl||0);
+        if(currentOutcome!==outcome || amountChanged){
+          entry.answers[question.id]=normalizedAnswer;
+          changed=true;
+        }
+
+        if(outcome==="not-completed"&&!entry.notCompleted[question.id]){
+          markMissionNotCompleted(entry,question,"not-completed",answer);
+          changed=true;
+        }else if(outcome==="partial"&&!entry.notCompleted[question.id]){
+          markMissionNotCompleted(entry,question,"partial",answer);
+          changed=true;
+        }
+      });
+
+      if(changed) setTodayScheduledEntry(entry);
+      return changed;
+    }
+
+    function captureNotificationQuestionIntent(){
+      const params=new URLSearchParams(location.search);
+      calendarNotificationIntentKey=String(params.get("calendarDate")||"").trim();
+      const questionId=String(params.get("question")||"").trim();
+      if(!questionId) return false;
+
+      notificationQuestionIntent={
+        questionId,
+        dateKey:String(params.get("date")||localDateKey()).trim()
+      };
+      return true;
+    }
+
+    function consumeCalendarNotificationIntent(){
+      const key=calendarNotificationIntentKey;
+      calendarNotificationIntentKey="";
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(key)) return false;
+      try{
+        const cleanUrl=new URL(location.href);
+        cleanUrl.searchParams.delete("calendarDate");
+        history.replaceState(history.state,"",`${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`);
+      }catch{}
+      const date=dateFromKey(key);
+      calendarCursor=new Date(date.getFullYear(),date.getMonth(),1);
+      showScreen("calendar");
+      renderCalendar();
+      setTimeout(()=>openCalendarDayDetails(key),120);
+      return true;
+    }
+
+    function clearNotificationQuestionIntentFromUrl(){
+      try{
+        const cleanUrl=new URL(location.href);
+        cleanUrl.searchParams.delete("question");
+        cleanUrl.searchParams.delete("date");
+        history.replaceState(history.state,"",`${cleanUrl.pathname}${cleanUrl.search}${cleanUrl.hash}`);
+      }catch{}
+    }
+
+    function getMissionHold(entry,id){
+      if(entry.inProgress?.[id]) return {type:"progress",...entry.inProgress[id]};
+      if(entry.deferred?.[id]) return {type:"deferred",...entry.deferred[id]};
+      return null;
+    }
+
+    function missionRemainingMinutes(hold){
+      return Math.max(0,Math.ceil((new Date(hold.expiresAt).getTime()-Date.now())/60000));
+    }
+
+    function scheduledQuestionWithProgress(question,entry){
+      const hold=getMissionHold(entry,question.id);
+      if(!hold) return question;
+
+      const rule=getMissionRule(question.id);
+      const remaining=missionRemainingMinutes(hold);
+
+      if(hold.type==="progress"){
+        const finishOptions=question.id==="cardio1"||question.id==="cardio2"
+          ? ["Sim","Ainda estou fazendo","Parcial","Parei sem concluir","Parei por segurança"]
+          : ["Completo","Ainda estou fazendo","Parcial","Parei sem concluir","Parei por segurança"];
+
+        return {
+          ...question,
+          text:`${question.text.replace(/[?]$/ ,"")} — terminou agora?`,
+          context:"Você marcou que estava fazendo. Atualize o resultado real; continuar em andamento não conta como falha.",
+          options:finishOptions,
+          followUp:true,
+          holdType:"progress",
+          remaining,
+          stateText:`EM ANDAMENTO • ${remaining} min restantes • lembrete a cada 5 min`
+        };
+      }
+
+      return {
+        ...question,
+        context:`${question.context||""} Você adiou esta resposta; o prazo original continua correndo.`,
+        holdType:"deferred",
+        remaining,
+        stateText:`EM ESPERA • ${remaining} min restantes • -${rule.penalty} pts se não concluir`
+      };
+    }
+
+    function consumeNotificationQuestionIntent(){
+      if(!notificationQuestionIntent){
+        return {question:null,notice:""};
+      }
+
+      const intent=notificationQuestionIntent;
+      notificationQuestionIntent=null;
+      clearNotificationQuestionIntentFromUrl();
+
+      const today=localDateKey();
+      if(intent.dateKey!==today){
+        return {question:null,notice:"Essa pergunta era de outro dia e já não pode mais ser respondida."};
+      }
+
+      const question=getTodayScheduledQuestions().find(item=>item.id===intent.questionId);
+      if(!question){
+        return {question:null,notice:"Essa pergunta não faz parte da rotina de hoje."};
+      }
+
+      expireScheduledQuestions();
+      const entry=getTodayScheduledEntry();
+
+      if(entry.finalized){
+        return {question:null,notice:"A missão de hoje já foi finalizada."};
+      }
+      if(entry.answers?.[question.id]){
+        return {question:null,notice:"Essa pergunta já foi respondida."};
+      }
+
+      const hold=getMissionHold(entry,question.id);
+      if(hold){
+        if(Date.now()<=new Date(hold.expiresAt).getTime()){
+          return {question:scheduledQuestionWithProgress(question,entry),notice:""};
+        }
+        return {question:null,notice:"O prazo dessa pergunta já terminou."};
+      }
+
+      const questionMinutes=minutesFromClock(question.time);
+      const now=currentMinutes();
+
+      if(entry.missed?.includes(question.id) || now>questionMinutes+20){
+        return {question:null,notice:"A janela de 20 minutos dessa pergunta já terminou."};
+      }
+      if(now<questionMinutes-2){
+        return {question:null,notice:`Essa pergunta abre às ${question.time}.`};
+      }
+
+      // O aviso antecipado chega cerca de um minuto antes. Ao tocar nele, a
+      // pergunta já pode abrir sem obrigar a pessoa a voltar ao app depois.
+      return {question,notice:""};
+    }
+
+    function expireScheduledQuestions(){
+      const e=getTodayScheduledEntry();
+      if(e.finalized) return false;
+
+      const now=currentMinutes();
+      let changed=false;
+      e.shown=e.shown||{};
+      e.missed=e.missed||[];
+      e.deferred=e.deferred||{};
+      e.inProgress=e.inProgress||{};
+      e.notCompleted=e.notCompleted||{};
+
+      getTodayScheduledQuestions().forEach(q=>{
+        const qm=minutesFromClock(q.time);
+        const wasActuallyShown=Boolean(e.shown[q.id]);
+        const hold=getMissionHold(e,q.id);
+
+        // Tanto “fazendo agora” quanto “responder depois” usam o primeiro
+        // horário como âncora. Repetir o adiamento nunca amplia o limite.
+        if(hold){
+          if(Date.now()<=new Date(hold.expiresAt).getTime()) return;
+          delete e.inProgress[q.id];
+          delete e.deferred[q.id];
+          if(!e.missed.includes(q.id)) e.missed.push(q.id);
+          markMissionNotCompleted(e,q,"expired",hold.type==="progress"?"Atividade não concluída no prazo":"Adiamento esgotado");
+          changed=true;
+          return;
+        }
+
+        // Enquanto as notificações push ainda não estão ligadas, uma pergunta
+        // só pode virar "perdida" se o app realmente chegou a mostrá-la.
+        if(
+          (PUSH_NOTIFICATIONS_LIVE || wasActuallyShown) &&
+          !e.answers?.[q.id] &&
+          !e.missed.includes(q.id) &&
+          now>qm+20
+        ){
+          e.missed.push(q.id);
+          // Uma janela só desconta ponto sem resposta quando a pergunta foi
+          // realmente aberta no aparelho. Push não confirmado nunca pune.
+          if(wasActuallyShown){
+            markMissionNotCompleted(e,q,"expired","Janela encerrada sem resposta");
+          }
+          changed=true;
+        }
+      });
+
+      if(changed) setTodayScheduledEntry(e);
+      return changed;
+    }
+
+    function getActiveScheduledQuestions(){
+      expireScheduledQuestions();
+
+      const e=getTodayScheduledEntry();
+      if(e.finalized) return [];
+
+      const now=currentMinutes();
+      const nowMs=Date.now();
+
+      return getTodayScheduledQuestions().filter(q=>{
+        const qm=minutesFromClock(q.time);
+        const hold=getMissionHold(e,q.id);
+        if(hold){
+          return !e.answers?.[q.id] &&
+            nowMs>=new Date(hold.nextPromptAt).getTime() &&
+            nowMs<=new Date(hold.expiresAt).getTime();
+        }
+        return !e.answers?.[q.id] &&
+          !e.missed?.includes(q.id) &&
+          now>=qm &&
+          now<=qm+20;
+      }).sort((a,b)=>{
+        const hydrationPriority=Number(isHydrationQuestion(a))-Number(isHydrationQuestion(b));
+        if(hydrationPriority!==0) return hydrationPriority;
+        return minutesFromClock(a.time)-minutesFromClock(b.time);
+      }).map(question=>scheduledQuestionWithProgress(question,e));
+    }
+
+    function getActiveScheduledQuestion(){
+      return getActiveScheduledQuestions()[0]||null;
+    }
+
+    function showScheduledQuestionIfNeeded(){
+      const o=$("scheduledQuestionOverlay");
+      if(!o || !appUnlocked) return;
+
+      const requested=consumeNotificationQuestionIntent();
+      if(requested.notice) toast(requested.notice);
+      const queue=getActiveScheduledQuestions();
+      const q=requested.question||queue[0]||null;
+
+      if(!q){
+        o.classList.add("hidden");
+        return;
+      }
+
+      const e=getTodayScheduledEntry();
+      e.shown=e.shown||{};
+
+      if(!e.shown[q.id]){
+        e.shown[q.id]=new Date().toISOString();
+        setTodayScheduledEntry(e);
+      }
+
+      const qs=getTodayScheduledQuestions();
+      const i=qs.findIndex(x=>x.id===q.id);
+      const elapsed=Math.max(0,currentMinutes()-minutesFromClock(q.time));
+      const stateEl=$("scheduledQuestionState");
+      const rule=getMissionRule(q.id);
+
+      $("scheduledQuestionTime").textContent=`${q.time} • AGORA`;
+      $("scheduledQuestionTitle").textContent=q.text;
+      $("scheduledQuestionContext").textContent=q.context||"";
+      const waitingCount=Math.max(0,new Set(queue.map(item=>item.id).filter(id=>id!==q.id)).size);
+      $("scheduledQuestionCounter").innerHTML=`${i+1}/${qs.length}${waitingCount?` <span class="question-queue-badge">• ${waitingCount} na fila</span>`:""}`;
+      $("scheduledQuestionExpires").textContent=q.holdType
+        ? `Prazo definitivo: ${q.remaining} min • lembretes a cada 5 min`
+        : `Essa janela fecha em aproximadamente ${Math.max(0,20-elapsed)} min`;
+
+      if(stateEl){
+        const stateTitle=q.stateText||`Se adiar, você terá até ${rule.waitMinutes} min. O prazo não reinicia.`;
+        stateEl.innerHTML=`<b>${escapeHtml(stateTitle)}</b><span>${escapeHtml(rule.basis||"ROTINA")}: ${escapeHtml(rule.basisText||"")}</span>`;
+        stateEl.classList.remove("hidden");
+      }
+
+      o.classList.toggle("hydration-question",isHydrationQuestion(q));
+
+      const visibleOptions=q.options.filter(opt=>!(rule.deferAnswers||[]).includes(opt));
+
+      $("scheduledQuestionOptions").innerHTML=visibleOptions.map(opt=>`
+        <button onclick='answerScheduledQuestion(${JSON.stringify(q.id)},${JSON.stringify(opt)})'>
+          ${escapeHtml(opt)}
+        </button>
+      `).join("")+`
+        <button class="defer-option" onclick='deferScheduledQuestion(${JSON.stringify(q.id)})'>
+          ⏳ ${escapeHtml(rule.deferLabel)}
+        </button>
+      `;
+
+      o.classList.remove("hidden");
+    }
+
+    function markMissionNotCompleted(entry,question,outcome,answer=""){
+      const rule=getMissionRule(question.id);
+      const penalty=outcome==="partial"
+        ? Math.max(1,Math.ceil(Number(rule.penalty||0)/2))
+        : Math.max(0,Number(rule.penalty||0));
+
+      entry.notCompleted=entry.notCompleted||{};
+      entry.notCompleted[question.id]={
+        outcome,
+        answer,
+        penalty,
+        recordedAt:new Date().toISOString()
+      };
+    }
+
+    function startMissionHold(id,type,sourceAnswer=""){
+      const e=getTodayScheduledEntry();
+      const question=getTodayScheduledQuestions().find(item=>item.id===id);
+      if(!question||e.finalized||e.answers?.[id]) return;
+
+      const rule=getMissionRule(id);
+      const now=new Date();
+      const previous=getMissionHold(e,id);
+      const firstStarted=previous?.startedAt||now.toISOString();
+      const firstStartedMs=new Date(firstStarted).getTime();
+      const expiresAt=new Date(firstStartedMs+rule.waitMinutes*60*1000);
+
+      if(expiresAt.getTime()<=now.getTime()){
+        delete e.deferred[id];
+        delete e.inProgress[id];
+        if(!e.missed.includes(id)) e.missed.push(id);
+        markMissionNotCompleted(e,question,"expired","Prazo máximo esgotado");
+        setTodayScheduledEntry(e);
+        $("scheduledQuestionOverlay").classList.add("hidden");
+        toast(`O prazo de ${rule.waitMinutes} min terminou. A missão foi marcada como não feita.`);
+        renderDashboard();
+        return;
+      }
+
+      const hold={
+        startedAt:firstStarted,
+        updatedAt:now.toISOString(),
+        nextPromptAt:new Date(Math.min(expiresAt.getTime(),now.getTime()+5*60*1000)).toISOString(),
+        expiresAt:expiresAt.toISOString(),
+        reminderMinutes:5,
+        maxMinutes:rule.waitMinutes,
+        penalty:rule.penalty,
+        attempts:Number(previous?.attempts||0)+1,
+        sourceAnswer
+      };
+
+      if(type==="progress"){
+        e.inProgress[id]=hold;
+        delete e.deferred[id];
+      }else{
+        e.deferred[id]=hold;
+        delete e.inProgress[id];
+      }
+
+      delete e.notCompleted[id];
+      e.missed=e.missed.filter(x=>x!==id);
+      setTodayScheduledEntry(e);
+      $("scheduledQuestionOverlay").classList.add("hidden");
+
+      const remaining=missionRemainingMinutes(hold);
+      toast(type==="progress"
+        ? `Em andamento. Vou conferir a cada 5 min; restam ${remaining} min.`
+        : `Em espera sem esticar o prazo: ${remaining} min restantes.`
+      );
+      renderHomeCheckin();
+      renderMission();
+      renderRank();
+      renderTodayScore();
+      renderDayJourney();
+    }
+
+    function deferScheduledQuestion(id){
+      startMissionHold(id,"deferred","Botão fazer depois");
+    }
+
+    function answerScheduledQuestion(id,answer){
+      const e=getTodayScheduledEntry();
+      const question=getTodayScheduledQuestions().find(item=>item.id===id);
+      if(!question) return;
+      const rule=getMissionRule(id);
+      e.answers=e.answers||{};
+      e.missed=e.missed||[];
+      e.shown=e.shown||{};
+      e.inProgress=e.inProgress||{};
+      e.deferred=e.deferred||{};
+      e.notCompleted=e.notCompleted||{};
+
+      if((rule.deferAnswers||[]).includes(answer)){
+        startMissionHold(id,"deferred",answer);
+        return;
+      }
+
+      if((rule.progressAnswers||[]).includes(answer)){
+        startMissionHold(id,"progress",answer);
+        return;
+      }
+
+      let outcome="complete";
+      if((rule.safetyAnswers||[]).includes(answer)) outcome="safety";
+      if((rule.negativeAnswers||[]).includes(answer)) outcome="not-completed";
+      if((rule.partialAnswers||[]).includes(answer)) outcome="partial";
+
+      const amountMl=isHydrationQuestion(question)
+        ? answer==="Sim, 500 ml"
+          ? 500
+          : answer==="Parcial, 250 ml"
+            ? 250
+            : 0
+        : undefined;
+
+      e.answers[id]={answer,outcome,answeredAt:new Date().toISOString(),...(amountMl===undefined?{}:{amountMl})};
+      delete e.inProgress[id];
+      delete e.deferred[id];
+      e.missed=e.missed.filter(x=>x!==id);
+
+      if(outcome==="not-completed"){
+        markMissionNotCompleted(e,question,"not-completed",answer);
+      }else if(outcome==="partial"&&!isHydrationQuestion(question)){
+        markMissionNotCompleted(e,question,"partial",answer);
+      }else{
+        delete e.notCompleted[id];
+      }
+
+      if(id==="daily_close"){
+        e.finalized=true;
+        e.finalizedAt=new Date().toISOString();
+        finalizeScheduledDay(e);
+      }
+
+      setTodayScheduledEntry(e);
+
+      if(id==="daily_close"){
+        evaluateMissionRewards();
+      }
+
+      $("scheduledQuestionOverlay").classList.add("hidden");
+      renderHomeCheckin();
+      renderMission();
+      renderRank();
+      renderTodayScore();
+      renderDayJourney();
+
+      if(id==="daily_close"){
+        setTimeout(showDailyResult,220);
+      }else{
+        setTimeout(showScheduledQuestionIfNeeded,150);
+      }
+    }
+
+    function getScorableQuestions(entry,date=new Date()){
+      const qs=getRoutineQuestionsForDate(date);
+
+      if(PUSH_NOTIFICATIONS_LIVE){
+        return qs;
+      }
+
+      const shown=entry?.shown||{};
+      return qs.filter(q=>shown[q.id] || entry?.answers?.[q.id]);
+    }
+
+    function calculateScheduledDayScore(e,date=new Date()){
+      const qs=getScorableQuestions(e,date);
+
+      return qs.length
+        ? Math.round((qs.reduce((total,q)=>{
+            const answer=e.answers?.[q.id];
+            if(!answer) return total;
+            const outcome=typeof answer==="object"?answer.outcome:"complete";
+            if(outcome==="not-completed") return total;
+            if(outcome==="partial") return total+0.5;
+            // Uma decisão por saúde/segurança continua valendo integralmente:
+            // o sistema não premia alguém por ignorar sintoma para ganhar ponto.
+            return total+1;
+          },0)/qs.length)*100)
+        : 0;
+    }
+
+    function getHydrationSummary(entry=getTodayScheduledEntry(),date=new Date()){
+      const questions=getScheduledQuestionsForDate(date).filter(isHydrationQuestion);
+      const blocks=questions.map(question=>{
+        const answer=entry.answers?.[question.id];
+        const amountMl=Math.max(0,Math.min(500,Number(answer?.amountMl)||0));
+        const hold=getMissionHold(entry,question.id);
+        return {question,answer,amountMl,hold,missed:entry.missed?.includes(question.id)};
+      });
+      const totalMl=Math.min(HYDRATION_TARGET_ML,blocks.reduce((sum,item)=>sum+item.amountMl,0));
+      const points=Math.floor(totalMl/250)*HYDRATION_POINTS_PER_250ML;
+      return {questions,blocks,totalMl,points,complete:totalMl>=HYDRATION_TARGET_ML};
+    }
+
+    function calculateMissionPenalty(entry){
+      return Object.values(entry.notCompleted||{})
+        .reduce((sum,item)=>sum+Math.max(0,Number(item?.penalty||0)),0);
+    }
+
+    function deductRankPoints(points){
+      const requested=Math.max(0,Math.round(Number(points)||0));
+      const state=getRankState();
+      const before=Math.max(0,Math.round(Number(state.points)||0));
+      const applied=Math.min(before,requested);
+      state.points=before-applied;
+      setJSON(STORAGE.rank,state);
+      return {requested,applied,inactive:requested-applied,before,after:state.points};
+    }
+
+    function settleEntryMissionPenalty(entry,dateKey){
+      if(entry.penaltySettledAt) return entry.penaltyResult||{requested:0,applied:0,inactive:0};
+      const result=deductRankPoints(calculateMissionPenalty(entry));
+      entry.penaltyRequested=result.requested;
+      entry.penaltyApplied=result.applied;
+      entry.penaltyInactive=result.inactive;
+      entry.penaltyResult=result;
+      entry.penaltySettledAt=new Date().toISOString();
+      entry.penaltyDate=dateKey;
+      return result;
+    }
+
+    function settlePastMissionPenalties(){
+      const all=getScheduledState();
+      const today=localDateKey();
+      let changed=false;
+
+      Object.entries(all).forEach(([key,rawEntry])=>{
+        if(key>=today) return;
+        const entry=normalizeScheduledEntry(rawEntry);
+        const questions=getScheduledQuestionsForDate(dateFromKey(key));
+
+        questions.forEach(question=>{
+          const hold=getMissionHold(entry,question.id);
+          if(!hold) return;
+          delete entry.deferred[question.id];
+          delete entry.inProgress[question.id];
+          if(!entry.missed.includes(question.id)) entry.missed.push(question.id);
+          markMissionNotCompleted(entry,question,"expired","O dia terminou antes da confirmação");
+          changed=true;
+        });
+
+        if(entry.penaltySettledAt||!Object.keys(entry.notCompleted||{}).length){
+          all[key]=entry;
+          return;
+        }
+        settleEntryMissionPenalty(entry,key);
+        all[key]=entry;
+        changed=true;
+      });
+
+      if(changed) setJSON(STORAGE.scheduledAnswers,all);
+      return changed;
+    }
+
+    function finalizeScheduledDay(e,date=new Date(),dateKey=localDateKey(date)){
+      e.score=calculateScheduledDayScore(e,date);
+      e.ritmoQualified=Boolean(e.answers?.daily_close) && e.score>=RITMO_MIN_SCORE;
+
+      const ritmoBefore=getJSON(STORAGE.ritmo,{current:0,best:0});
+      const prospectiveDays=e.ritmoQualified
+        ? (Number(ritmoBefore.current||0)+1)
+        : 0;
+
+      const multiplier=e.ritmoQualified
+        ? getRitmoMultiplier(prospectiveDays)
+        : 1.00;
+
+      const basePoints=Math.round(e.score*1.35);
+      const hydration=getHydrationSummary(e,date);
+      const hydrationPoints=hydration.points;
+      const earnedPoints=Math.round(basePoints*multiplier)+hydrationPoints;
+
+      e.basePoints=basePoints;
+      e.ritmoMultiplier=multiplier;
+      e.hydrationMl=hydration.totalMl;
+      e.hydrationPoints=hydrationPoints;
+      e.pointsEarned=earnedPoints;
+
+      if(!e.pointsAwarded){
+        settleEntryMissionPenalty(e,dateKey);
+        addRankPoints(earnedPoints,true);
+        e.pointsAwarded=true;
+      }
+
+      const all=getScheduledState();
+      all[dateKey]=e;
+
+      // Passa pelo setJSON para entrar na fila de sincronização do D1.
+      setJSON(STORAGE.scheduledAnswers,all);
+      reconcileScheduledDaysAndRitmo();
+    }
+
+    function repairScheduledStateIntegrity(){
+      const all=getScheduledState();
+      let changed=false;
+
+      Object.entries(all).forEach(([key,raw])=>{
+        if(!/^\d{4}-\d{2}-\d{2}$/.test(key) || !raw) return;
+        const entry=normalizeScheduledEntry(raw);
+        const date=dateFromKey(key);
+
+        // Hidratação só vale pelo texto da resposta realmente registrada.
+        getScheduledQuestionsForDate(date).filter(isHydrationQuestion).forEach(question=>{
+          const stored=entry.answers?.[question.id];
+          if(!stored) return;
+          const answer=journeyAnswerText(stored);
+          const expected=answer==="Sim, 500 ml" ? 500 : answer==="Parcial, 250 ml" ? 250 : 0;
+          if(Number(stored?.amountMl||0)!==expected){
+            entry.answers[question.id]={
+              ...(typeof stored==="object"?stored:{}),
+              answer,
+              amountMl:expected
+            };
+            changed=true;
+          }
+        });
+
+        // Se o Fechar dia foi respondido mas o marcador de finalização sumiu,
+        // reconstrói os campos derivados sem inventar respostas.
+        if(entry.answers?.daily_close && !entry.finalizedAt){
+          const stamp=entry.answers.daily_close.answeredAt||new Date(
+            date.getFullYear(),date.getMonth(),date.getDate(),21,30
+          ).toISOString();
+          entry.finalized=true;
+          entry.finalizedAt=stamp;
+          entry.score=calculateScheduledDayScore(entry,date);
+          entry.ritmoQualified=entry.score>=RITMO_MIN_SCORE;
+          const hydration=getHydrationSummary(entry,date);
+          entry.hydrationMl=hydration.totalMl;
+          entry.hydrationPoints=hydration.points;
+          entry.repairedFinalizationAt=new Date().toISOString();
+          changed=true;
+        }
+
+        all[key]=entry;
+      });
+
+      // Correção única desta instalação para o sábado informado pelo usuário.
+      // Subtrai um bloco fantasma de 500 ml e restaura o fechamento confirmado.
+      const repairKey="2026-08-22";
+      const saturday=all[repairKey] ? normalizeScheduledEntry(all[repairKey]) : null;
+      if(saturday && !saturday.repair20260822Applied){
+        const hydrationIds=Object.keys(saturday.answers||{})
+          .filter(id=>isHydrationQuestion(id) && Number(saturday.answers[id]?.amountMl||0)===500)
+          .sort((a,b)=>String(saturday.answers[b]?.answeredAt||"").localeCompare(String(saturday.answers[a]?.answeredAt||"")));
+
+        if(hydrationIds.length){
+          const phantomId=hydrationIds[0];
+          delete saturday.answers[phantomId];
+          delete saturday.deferred[phantomId];
+          delete saturday.inProgress[phantomId];
+          saturday.missed=(saturday.missed||[]).filter(id=>id!==phantomId);
+          delete saturday.notCompleted[phantomId];
+          saturday.hydrationRepairRemoved=phantomId;
+        }
+
+        const saturdayDate=dateFromKey(repairKey);
+        if(!saturday.answers.daily_close){
+          saturday.answers.daily_close={
+            answer:"Fechar dia",
+            outcome:"complete",
+            answeredAt:new Date(
+              saturdayDate.getFullYear(),saturdayDate.getMonth(),saturdayDate.getDate(),21,30
+            ).toISOString(),
+            repaired:true
+          };
+        }
+
+        saturday.finalized=true;
+        saturday.finalizedAt=saturday.answers.daily_close.answeredAt;
+        saturday.score=calculateScheduledDayScore(saturday,saturdayDate);
+        saturday.ritmoQualified=saturday.score>=RITMO_MIN_SCORE;
+
+        const hydration=getHydrationSummary(saturday,saturdayDate);
+        saturday.hydrationMl=hydration.totalMl;
+        saturday.hydrationPoints=hydration.points;
+
+        // Não recompensa de novo durante reparo: evita duplicar pontos se um
+        // snapshot concorrente já tinha salvo a recompensa.
+        saturday.pointsAwarded=true;
+        saturday.repair20260822Applied=new Date().toISOString();
+
+        all[repairKey]=saturday;
+        changed=true;
+      }
+
+      if(changed){
+        setJSON(STORAGE.scheduledAnswers,all);
+        reconcileScheduledDaysAndRitmo();
+      }
+      const rankRepaired=repairRankStateIntegrity();
+      return changed||rankRepaired;
+    }
+
+    function reconcileScheduledDaysAndRitmo(){
+      const profile=getJSON(STORAGE.profile);
+      if(!profile) return;
+
+      const all=getScheduledState();
+      const createdKey=localDateKey(new Date(profile.createdAt||Date.now()));
+      const todayKey=localDateKey();
+      const today=dateFromKey(todayKey);
+
+      let cursor=dateFromKey(createdKey);
+      let current=0;
+      let best=0;
+
+      while(cursor<=today){
+        const key=localDateKey(cursor);
+        const entry=all[key];
+        const isToday=key===todayKey;
+
+        if(entry?.finalizedAt){
+          const qualified=Boolean(entry.ritmoQualified && Number(entry.score||0)>=RITMO_MIN_SCORE);
+
+          if(qualified){
+            current+=1;
+            best=Math.max(best,current);
+          }else{
+            current=0;
+          }
+        }else if(!isToday){
+          // Dia já acabou e não foi fechado: quebra a sequência.
+          current=0;
+        }
+        // Hoje ainda aberto não quebra nada até o dia acabar.
+
+        cursor.setDate(cursor.getDate()+1);
+      }
+
+      const ritmo={
+        current,
+        best,
+        startedAt:createdKey,
+        lastEvaluatedDate:todayKey
+      };
+
+      setJSON(STORAGE.ritmo,ritmo);
+      unlockMascotIfNeeded();
+    }
+
+    function getRitmoMultiplier(days){
+      days=Number(days||0);
+
+      // O bônus só começa depois de 3 dias completos de Ritmo.
+      // A progressão é propositalmente rígida.
+      if(days>=90) return 2.00;
+      if(days>=60) return 1.60;
+      if(days>=30) return 1.35;
+      if(days>=14) return 1.20;
+      if(days>=7) return 1.10;
+      if(days>=3) return 1.05;
+      return 1.00;
+    }
+
+    function getMonday(date=new Date()){
+      const d=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+      const day=d.getDay();
+      const diff=day===0?-6:1-day;
+      d.setDate(d.getDate()+diff);
+      return d;
+    }
+
+    function getCurrentWeekKeys(){
+      const monday=getMonday();
+      return Array.from({length:7},(_,i)=>{
+        const d=new Date(monday);
+        d.setDate(monday.getDate()+i);
+        return localDateKey(d);
+      });
+    }
+
+    function getQualifiedCount(keys){
+      const all=getScheduledState();
+      const profile=getJSON(STORAGE.profile);
+      const createdKey=profile?.createdAt ? localDateKey(new Date(profile.createdAt)) : null;
+
+      return keys.filter(key=>{
+        if(createdKey && key<createdKey) return false;
+        const e=all[key];
+        return Boolean(e?.finalizedAt && e?.ritmoQualified && Number(e?.score||0)>=RITMO_MIN_SCORE);
+      }).length;
+    }
+
+    function getCurrentMonthKeys(){
+      const now=new Date();
+      const days=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
+      return Array.from({length:days},(_,i)=>localDateKey(new Date(now.getFullYear(),now.getMonth(),i+1)));
+    }
+
+    function getMissionRewardState(){
+      return getJSON(STORAGE.missions,{daily:{},weekly:{},monthly:{}});
+    }
+
+    function setMissionRewardState(state){
+      setJSON(STORAGE.missions,state);
+    }
+
+    function currentWeekId(){
+      return localDateKey(getMonday());
+    }
+
+    function currentMonthId(){
+      const now=new Date();
+      return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}`;
+    }
+
+    function evaluateMissionRewards(){
+      const rewards=getMissionRewardState();
+      rewards.daily=rewards.daily||{};
+      rewards.weekly=rewards.weekly||{};
+      rewards.monthly=rewards.monthly||{};
+
+      const todayKey=localDateKey();
+      const todayEntry=getTodayScheduledEntry();
+      const weekId=currentWeekId();
+      const monthId=currentMonthId();
+
+      const dailyDone=Boolean(todayEntry.finalizedAt && todayEntry.ritmoQualified && Number(todayEntry.score||0)>=RITMO_MIN_SCORE);
+      const weeklyDone=getQualifiedCount(getCurrentWeekKeys())>=5;
+      const monthlyDone=getQualifiedCount(getCurrentMonthKeys())>=20;
+
+      if(dailyDone && !rewards.daily[todayKey]){
+        rewards.daily[todayKey]=true;
+        addRankPoints(10,false);
+      }
+
+      if(weeklyDone && !rewards.weekly[weekId]){
+        rewards.weekly[weekId]=true;
+        addRankPoints(75,false);
+        toast("Missão da semana concluída: +75 pts.");
+      }
+
+      if(monthlyDone && !rewards.monthly[monthId]){
+        rewards.monthly[monthId]=true;
+        addRankPoints(250,false);
+        toast("Missão do mês concluída: +250 pts.");
+      }
+
+      setMissionRewardState(rewards);
+    }
+
+    function renderWeekPanel(){
+      const grid=$("weekStatusGrid");
+      if(!grid) return;
+
+      const profile=getJSON(STORAGE.profile);
+      if(!profile) return;
+
+      const all=getScheduledState();
+      const keys=getCurrentWeekKeys();
+      const nowKey=localDateKey();
+      const now=dateFromKey(nowKey);
+      const createdKey=localDateKey(new Date(profile.createdAt||Date.now()));
+      const createdDate=dateFromKey(createdKey);
+
+      $("weekPanelRange").textContent=`${dateFromKey(keys[0]).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}–${dateFromKey(keys[6]).toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"})}`;
 
       const labels=["SEG","TER","QUA","QUI","SEX","SÁB","DOM"];
 
